@@ -7,7 +7,7 @@ export default class Welcome extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div id="welcome">
                 <img src="/logo.png" />
                 <Registration />
             </div>
