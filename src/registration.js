@@ -62,6 +62,7 @@ export default class Registration extends React.Component {
                 <input
                     name="password"
                     placeholder="password"
+                    type="password"
                     onChange={e => this.handleChange(e)}
                 />
 

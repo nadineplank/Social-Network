@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Registration from "./registration";
+import Welcome from "./welcome";
 // import Home from "./home";
 // import Welcome from "./welcome";
 
 let elem;
 if (location.pathname == "/register") {
-    elem = <Registration />;
+    elem = <Welcome />;
     // } else if (location.pathname == "/home") {
     //     elem = <Home />;
 } else {
