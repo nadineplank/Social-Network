@@ -3,8 +3,11 @@ const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const bcrypt = require("./bcrypt");
-const { addUser, login } = require("./db");
+const { addUser, login, verify, updatePassword, storeCode } = require("./db");
 const csurf = require("csurf");
+const { requireLoggedOutUser } = require("./middleware");
+const cryptoRandomString = require("crypto-random-string");
+const { sendEmail } = require("./ses");
 
 app.use(compression());
 
@@ -64,8 +67,7 @@ app.post("/register", (req, res) => {
         // put the first, last, email and hashed password into the users table
         addUser(first, last, email, hashedPass)
             .then(function(data) {
-                console.log("Data: ", data);
-                // upon success put the user's id into req.session and redirect to the petition
+                // upon success put the user's id into req.session and redirect to home
                 req.session.userId = data.rows[0].id;
                 res.json(data.rows[0]);
             })
@@ -100,6 +102,76 @@ app.post("/login", (req, res) => {
         .catch(err => {
             console.log("error in login: ", err);
             res.json(false);
+        });
+});
+
+app.post("/reset", requireLoggedOutUser, (req, res) => {
+    const secretCode = cryptoRandomString({ length: 6 });
+    let email = req.body.email,
+        message = "Here is your code for reseting: " + secretCode;
+
+    // find the users email in the table
+    login(email)
+        .then(data => {
+            if (data) {
+                res.json(data[0]);
+                sendEmail(email, message, "Reset your password")
+                    .then(() => {
+                        console.log("SendEmail was successfull: ");
+                    })
+                    .catch(err => {
+                        console.log("error in sendEmail: ", err);
+                    });
+
+                storeCode(email, secretCode).then(result => {
+                    console.log("StoreCode worked!: ", result);
+                });
+            } else {
+                res.json(false);
+            }
+        })
+        .catch(err => {
+            console.log("Error in reset: ", err);
+            res.json(false);
+        });
+});
+
+app.post("/verify", requireLoggedOutUser, (req, res) => {
+    let email = req.body.email,
+        code = req.body.code,
+        password = req.body.password;
+    console.log("email: ", email);
+
+    // compare code with code from database and insert new password
+    verify(email)
+        .then(data => {
+            console.log("Data from verify: ", data[0].code);
+            if (data[0].code === code) {
+                bcrypt
+                    .hash(password)
+                    .then(hashedPass => {
+                        // put the first, last, email and hashed password into the users table
+                        updatePassword(email, hashedPass)
+                            .then(function(data) {
+                                console.log("Data from setNewPassword: ", data);
+                                res.json(data);
+                            })
+                            // upon failure, re-render the register template with an error message
+                            .catch(function(err) {
+                                console.log("err in setNewPassword: ", err);
+                                res.json(false);
+                            });
+                    })
+                    .catch(err => {
+                        console.log("Error in bcyrpt: ", err);
+                        res.json(false);
+                    });
+            } else {
+                res.json(false);
+            }
+        })
+        .catch(err => {
+            console.log("Error in verify: ", err);
         });
 });
 

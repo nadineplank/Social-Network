@@ -23,3 +23,34 @@ exports.login = function(email) {
         )
         .then(({ rows }) => rows);
 };
+
+exports.storeCode = function(email, secretCode) {
+    return db.query(
+        `INSERT INTO reset (email, code)
+            VALUES ($1, $2)
+            ON CONFLICT (email)
+            DO UPDATE SET code = $2
+            RETURNING code`,
+        [email, secretCode]
+    );
+};
+
+exports.verify = function(email) {
+    return db
+        .query(
+            `SELECT code
+            FROM reset
+            WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
+            AND email = '${email}'`
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.updatePassword = function(password, email) {
+    return db.query(
+        `UPDATE users
+    SET password = $1
+    WHERE email = $2`,
+        [password, email]
+    );
+};

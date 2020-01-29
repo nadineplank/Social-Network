@@ -34,7 +34,7 @@ export default class Login extends React.Component {
         return (
             <div>
                 {this.state.error && (
-                    <div className="error">Oops! Something went wrong!</div>
+                    <div className="error">Email or Password wrong!</div>
                 )}
                 <input
                     name="email"

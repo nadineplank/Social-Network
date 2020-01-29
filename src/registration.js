@@ -17,7 +17,7 @@ export default class Registration extends React.Component {
 
     submit() {
         /// axios.post('/register', this.state);
-        console.log("State: ", this.state);
+
         axios
             .post("/register", {
                 first: this.state.first,
@@ -72,6 +72,10 @@ export default class Registration extends React.Component {
                 <div id="login">
                     <p>Already a member? </p>
                     <Link to="/login">Log in</Link>
+                </div>
+                <div id="reset">
+                    <p>Forgot your password?</p>
+                    <Link to="/resetPassword">Reset password</Link>
                 </div>
             </div>
         );
