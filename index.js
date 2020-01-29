@@ -3,8 +3,10 @@ const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const bcrypt = require("./bcrypt");
-const { addUser } = require("./db");
+const { addUser, login } = require("./db");
 const csurf = require("csurf");
+
+app.use(compression());
 
 let secrets;
 if (process.env.NODE_ENV != "production") {
@@ -20,24 +22,7 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-app.use(compression());
-
-app.use(express.static("./public"));
-
 app.use(express.json());
-
-app.use(csurf());
-
-app.use(function(req, res, next) {
-    res.cookie("mytoken", req.csrfToken());
-    next();
-});
-
-app.use(
-    express.urlencoded({
-        extended: false
-    })
-);
 
 app.use(
     cookieSession({
@@ -45,6 +30,21 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
+
+app.use(csurf());
+
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
+
+app.use(express.static("./public"));
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 app.get("/register", function(req, res) {
     if (req.session.userId) {
@@ -76,6 +76,36 @@ app.post("/register", (req, res) => {
             });
     });
 });
+
+app.post("/login", (req, res) => {
+    let email = req.body.email,
+        password = req.body.password;
+    // - find the info from the user's table by the submitted email address
+    login(email)
+        .then(data => {
+            // - compare the submitted password to the saved hashed password from the database using bcrypt's compare
+            bcrypt.compare(password, data[0].password).then(result => {
+                if (result) {
+                    req.session.userId = data[0].id;
+                    // if (data[0].id) {
+                    //     req.session.profileId = data[0].id;
+                    // }
+                    res.json(data[0]);
+                } else {
+                    // - if there is no match, re-render the template with an error message
+                    res.json(false);
+                }
+            });
+        })
+        .catch(err => {
+            console.log("error in login: ", err);
+            res.json(false);
+        });
+});
+
+// app.get('/logout', (req, res) => {
+//
+// });
 
 ////// HAS TO BE THE LAST ROUTE ///////
 app.get("*", function(req, res) {

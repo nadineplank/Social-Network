@@ -13,3 +13,13 @@ exports.addUser = function(first, last, email, password) {
         [first, last, email, password]
     );
 };
+
+exports.login = function(email) {
+    return db
+        .query(
+            `SELECT email, password, id
+            FROM users
+            WHERE email = '${email}'`
+        )
+        .then(({ rows }) => rows);
+};

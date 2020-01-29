@@ -14,3 +14,8 @@ input {
     flex-direction: column;
     align-items: center;
 }
+
+#login {
+    display: flex;
+    justify-content: center;
+}
