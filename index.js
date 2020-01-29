@@ -4,6 +4,7 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const bcrypt = require("./bcrypt");
 const { addUser } = require("./db");
+const csurf = require("csurf");
 
 let secrets;
 if (process.env.NODE_ENV != "production") {
@@ -24,6 +25,13 @@ app.use(compression());
 app.use(express.static("./public"));
 
 app.use(express.json());
+
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 app.use(
     express.urlencoded({
@@ -47,7 +55,6 @@ app.get("/register", function(req, res) {
 });
 
 app.post("/register", (req, res) => {
-    console.log("Req.body: ", req.body);
     let first = req.body.first,
         last = req.body.last,
         email = req.body.email;
