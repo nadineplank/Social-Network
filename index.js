@@ -3,11 +3,20 @@ const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const bcrypt = require("./bcrypt");
-const { addUser, login, verify, updatePassword, storeCode } = require("./db");
+const {
+    addUser,
+    getUser,
+    verify,
+    updatePassword,
+    storeCode,
+    updateImage
+} = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
+const s3 = require("./s3");
+const { s3Url } = require("./config");
 
 app.use(compression());
 
@@ -42,6 +51,32 @@ app.use(
     })
 );
 
+/////// DO NOT TOUCH
+
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+/////// DO NOT TOUCH
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
+
 app.use(express.static("./public"));
 
 app.use(function(req, res, next) {
@@ -69,6 +104,7 @@ app.post("/register", (req, res) => {
             .then(function(data) {
                 // upon success put the user's id into req.session and redirect to home
                 req.session.userId = data.rows[0].id;
+                req.session.email = data.rows[0].email;
                 res.json(data.rows[0]);
             })
             // upon failure, re-render the register template with an error message
@@ -83,12 +119,13 @@ app.post("/login", (req, res) => {
     let email = req.body.email,
         password = req.body.password;
     // - find the info from the user's table by the submitted email address
-    login(email)
+    getUser(email)
         .then(data => {
             // - compare the submitted password to the saved hashed password from the database using bcrypt's compare
             bcrypt.compare(password, data[0].password).then(result => {
                 if (result) {
                     req.session.userId = data[0].id;
+                    req.session.email = data[0].email;
                     // if (data[0].id) {
                     //     req.session.profileId = data[0].id;
                     // }
@@ -111,7 +148,7 @@ app.post("/reset", requireLoggedOutUser, (req, res) => {
         message = "Here is your code for reseting: " + secretCode;
 
     // find the users email in the table
-    login(email)
+    getUser(email)
         .then(data => {
             if (data) {
                 res.json(data[0]);
@@ -145,7 +182,6 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
     // compare code with code from database and insert new password
     verify(email)
         .then(data => {
-            console.log("Data from verify: ", data[0].code);
             if (data[0].code === code) {
                 bcrypt
                     .hash(password)
@@ -153,7 +189,6 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
                         // put the first, last, email and hashed password into the users table
                         updatePassword(email, hashedPass)
                             .then(function(data) {
-                                console.log("Data from setNewPassword: ", data);
                                 res.json(data);
                             })
                             // upon failure, re-render the register template with an error message
@@ -172,6 +207,40 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
         })
         .catch(err => {
             console.log("Error in verify: ", err);
+        });
+});
+
+app.get("/user", (req, res) => {
+    let email = req.session.email;
+
+    //TODO write more code here
+    getUser(email)
+        .then(data => {
+            res.json({
+                first: data[0].first,
+                last: data[0].last,
+                id: data[0].id,
+                image: data[0].image || "/default.png"
+            });
+        })
+        .catch(err => {
+            console.log("error in GET /user: ", err);
+        });
+});
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    let imageUrl = s3Url + req.file,
+        id = req.session.userId;
+
+    updateImage(imageUrl, id)
+        .then(data => {
+            console.log("Data from updateImage: ", data);
+            res.json(data[0].image);
+        })
+        .catch(err => {
+            console.log("Error in updateImage: ", err);
+            res.sendStatus(500);
+            res.json(false);
         });
 });
 

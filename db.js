@@ -9,17 +9,18 @@ exports.addUser = function(first, last, email, password) {
     return db.query(
         `INSERT INTO users (first, last, email, password)
         VALUES ($1, $2, $3, $4)
-        RETURNING id`,
+        RETURNING id, email`,
         [first, last, email, password]
     );
 };
 
-exports.login = function(email) {
+exports.getUser = function(email) {
     return db
         .query(
-            `SELECT email, password, id
+            `SELECT email, password, id, first, last
             FROM users
-            WHERE email = '${email}'`
+            WHERE email = $1`,
+            [email]
         )
         .then(({ rows }) => rows);
 };
@@ -30,6 +31,7 @@ exports.storeCode = function(email, secretCode) {
             VALUES ($1, $2)
             ON CONFLICT (email)
             DO UPDATE SET code = $2
+            created_at = now()
             RETURNING code`,
         [email, secretCode]
     );
@@ -41,7 +43,8 @@ exports.verify = function(email) {
             `SELECT code
             FROM reset
             WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
-            AND email = '${email}'`
+            AND email = $1`,
+            [email]
         )
         .then(({ rows }) => rows);
 };
@@ -52,5 +55,15 @@ exports.updatePassword = function(password, email) {
     SET password = $1
     WHERE email = $2`,
         [password, email]
+    );
+};
+
+exports.updateImage = function(image, id) {
+    return db.query(
+        `UPDATE users
+        SET image = $1
+        WHERE id = $2
+        RETURNING image`,
+        [image, id]
     );
 };
