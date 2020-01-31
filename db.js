@@ -17,7 +17,7 @@ exports.addUser = function(first, last, email, password) {
 exports.getUser = function(email) {
     return db
         .query(
-            `SELECT email, password, id, first, last
+            `SELECT *
             FROM users
             WHERE email = $1`,
             [email]

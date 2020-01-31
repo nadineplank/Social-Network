@@ -229,13 +229,14 @@ app.get("/user", (req, res) => {
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    let imageUrl = s3Url + req.file,
+    let file = s3Url + req.file.filename,
         id = req.session.userId;
+    console.log("file: ", req.file);
 
-    updateImage(imageUrl, id)
+    updateImage(file, id)
         .then(data => {
-            console.log("Data from updateImage: ", data);
-            res.json(data[0].image);
+            console.log("Data from updateImage: ", data.rows[0].image);
+            res.json(data.rows[0].image);
         })
         .catch(err => {
             console.log("Error in updateImage: ", err);
