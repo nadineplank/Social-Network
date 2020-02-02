@@ -1,8 +1,8 @@
 import React from "react";
-
 import axios from "./axios";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
+import Profile from "./profile";
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ export default class Home extends React.Component {
             <div>
                 <img src="/logo.png" alt="Logo" />
                 <ProfilePic
-                    clickHandler={() =>
+                    showUploader={() =>
                         this.setState({ uploaderVisible: true })
                     }
                     image={this.state.image}
@@ -33,6 +33,17 @@ export default class Home extends React.Component {
                 {this.state.uploaderVisible && (
                     <Uploader setImageUrl={image => this.setState({ image })} />
                 )}
+                <div>
+                    <Profile
+                        id={this.state.id}
+                        first={this.state.first}
+                        last={this.state.last}
+                        image={this.state.image}
+                        onClick={this.uploaderVisible}
+                        bio={this.state.bio}
+                        setBio={bio => this.setState({ bio })}
+                    />
+                </div>
             </div>
         );
     }

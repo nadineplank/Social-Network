@@ -5,11 +5,8 @@ export default class Uploader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.setImageUrl = this.props.setImageUrl;
     }
     handleChange(e) {
-        /// this[e.target.name] = e.target.value;
-
         this.file = e.target.files[0];
     }
     upload(e) {
@@ -17,14 +14,11 @@ export default class Uploader extends React.Component {
 
         var formData = new FormData();
         formData.append("file", this.file);
-        console.log("file: ", this.file);
-        console.log("formData: ", formData);
 
         axios
             .post("/upload", formData)
-            .then(data => {
-                console.log("Data from upload: ", data.data);
-                this.setImageUrl(data.data);
+            .then(image => {
+                this.props.setImageUrl(image.data);
             })
             .catch(err => {
                 console.log("error in upload: ", err);

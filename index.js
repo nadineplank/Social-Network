@@ -9,7 +9,8 @@ const {
     verify,
     updatePassword,
     storeCode,
-    updateImage
+    updateImage,
+    setBio
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -213,7 +214,6 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
 app.get("/user", (req, res) => {
     let email = req.session.email;
 
-    //TODO write more code here
     getUser(email)
         .then(data => {
             res.json({
@@ -231,17 +231,29 @@ app.get("/user", (req, res) => {
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     let file = s3Url + req.file.filename,
         id = req.session.userId;
-    console.log("file: ", req.file);
 
     updateImage(file, id)
         .then(data => {
-            console.log("Data from updateImage: ", data.rows[0].image);
             res.json(data.rows[0].image);
         })
         .catch(err => {
             console.log("Error in updateImage: ", err);
             res.sendStatus(500);
             res.json(false);
+        });
+});
+
+app.post("/setBio", (req, res) => {
+    let bio = req.body.bio,
+        id = req.session.userId;
+    console.log("bio: ", bio);
+    setBio(bio, id)
+        .then(data => {
+            console.log("data from setBio: ", data);
+            res.json(data.rows[0].bio);
+        })
+        .catch(err => {
+            console.log("error in setBio: ", err);
         });
 });
 
