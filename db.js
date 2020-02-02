@@ -67,3 +67,13 @@ exports.updateImage = function(image, id) {
         [image, id]
     );
 };
+
+exports.setBio = function(bio, id) {
+    return db.query(
+        `UPDATE users
+        SET bio = $1
+        WHERE id = $2
+        RETURNING bio`,
+        [bio, id]
+    );
+};
