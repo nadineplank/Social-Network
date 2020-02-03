@@ -77,3 +77,14 @@ exports.setBio = function(bio, id) {
         [bio, id]
     );
 };
+
+exports.otherUser = function(id) {
+    return db
+        .query(
+            `SELECT image, bio, first, last, id
+        FROM users
+        WHERE id = $1`,
+            [id]
+        )
+        .then(({ rows }) => rows);
+};

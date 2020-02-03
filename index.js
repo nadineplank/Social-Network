@@ -10,7 +10,8 @@ const {
     updatePassword,
     storeCode,
     updateImage,
-    setBio
+    setBio,
+    otherUser
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -220,7 +221,8 @@ app.get("/user", (req, res) => {
                 first: data[0].first,
                 last: data[0].last,
                 id: data[0].id,
-                image: data[0].image || "/default.png"
+                image: data[0].image || "/default.png",
+                bio: data[0].bio
             });
         })
         .catch(err => {
@@ -257,9 +259,26 @@ app.post("/setBio", (req, res) => {
         });
 });
 
-// app.get('/logout', (req, res) => {
-//
-// });
+app.get("/user/:id.json", (req, res) => {
+    let id = req.params.id,
+        userId = req.session.id;
+    console.log("id: ", id);
+    otherUser(id).then(data => {
+        console.log("otherUser: ", data);
+        res.json({
+            first: data[0].first,
+            last: data[0].last,
+            image: data[0].image || "/default.png",
+            bio: data[0].bio,
+            userId: userId,
+            id: data[0].id
+        });
+    });
+});
+
+app.get("/logout", (req, res) => {
+    (req.session.userId = null), res.redirect("/");
+});
 
 ////// HAS TO BE THE LAST ROUTE ///////
 app.get("*", function(req, res) {

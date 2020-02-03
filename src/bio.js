@@ -4,11 +4,19 @@ import axios from "./axios";
 export default class Bio extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { editorVisible: false };
+        this.state = { editorVisible: false, bio: this.props.bio };
     }
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
+
+    toggleState() {
+        this.setState({
+            editorVisible: false
+        });
+        this.submitBio();
+    }
+
     submitBio() {
         axios
             .post("/setBio", {
@@ -27,7 +35,7 @@ export default class Bio extends React.Component {
             <div className="bio-container">
                 {this.props.bio && (
                     <div>
-                        <h2>This is your bio: {this.props.bio}</h2>
+                        <h2>{this.props.bio}</h2>
 
                         <button
                             onClick={() =>
@@ -51,10 +59,10 @@ export default class Bio extends React.Component {
                     <div className="bio-container">
                         <textarea
                             name="bio"
-                            defaultValue={this.props.bio}
+                            defaultValue={this.state.bio}
                             onChange={e => this.handleChange(e)}
                         ></textarea>
-                        <button onClick={() => this.submitBio()}>SAVE</button>
+                        <button onClick={() => this.toggleState()}>SAVE</button>
                     </div>
                 )}
             </div>
