@@ -29,7 +29,7 @@ export default class Registration extends React.Component {
                 console.log("data: ", data);
                 if (data.id) {
                     // it worked
-                    location.replace("/home");
+                    location.replace("/");
                 } else {
                     // failure
                     this.setState({

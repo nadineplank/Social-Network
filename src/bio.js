@@ -12,7 +12,7 @@ export default class Bio extends React.Component {
 
     toggleState() {
         this.setState({
-            editorVisible: false
+            editorVisible: !this.state.editorVisible
         });
         this.submitBio();
     }
@@ -23,7 +23,6 @@ export default class Bio extends React.Component {
                 bio: this.state.bio
             })
             .then(bio => {
-                console.log("axios bio: ", bio);
                 this.props.setBio(bio.data);
             })
             .catch(err => {
@@ -33,30 +32,37 @@ export default class Bio extends React.Component {
     render() {
         return (
             <div className="bio-container">
-                {this.props.bio && (
+                {!this.props.bio && (
                     <div>
-                        <h2>{this.props.bio}</h2>
-
                         <button
                             onClick={() =>
                                 this.setState({ editorVisible: true })
                             }
                         >
-                            EDIT BIO
+                            ADD BIO
                         </button>
                     </div>
                 )}
 
-                {this.props.bio == null && (
-                    <button
-                        onClick={() => this.setState({ editorVisible: true })}
-                    >
-                        ADD BIO
-                    </button>
+                {this.props.bio && (
+                    <div>
+                        {this.state.editorVisible == false && (
+                            <div>
+                                {this.props.bio}
+                                <button
+                                    onClick={() =>
+                                        this.setState({ editorVisible: true })
+                                    }
+                                >
+                                    EDIT BIO
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 )}
 
                 {this.state.editorVisible == true && (
-                    <div className="bio-container">
+                    <div>
                         <textarea
                             name="bio"
                             defaultValue={this.state.bio}

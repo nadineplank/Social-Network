@@ -78,13 +78,34 @@ exports.setBio = function(bio, id) {
     );
 };
 
-exports.otherUser = function(id) {
+exports.getOtherUser = function(id) {
     return db
         .query(
             `SELECT image, bio, first, last, id
         FROM users
         WHERE id = $1`,
             [id]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.findPeople = function(val) {
+    return db
+        .query(
+            `SELECT first, last, image, id, bio
+        FROM users
+        WHERE first ILIKE $1;`,
+            [val + "%"]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.newUsers = function() {
+    return db
+        .query(
+            `SELECT first, last, image, id, bio
+        FROM users
+        ORDER BY id DESC LIMIT 3.`
         )
         .then(({ rows }) => rows);
 };

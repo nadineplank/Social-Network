@@ -22,7 +22,7 @@ export default class Login extends React.Component {
             })
             .then(({ data }) => {
                 if (data.id) {
-                    location.replace("/home");
+                    location.replace("/");
                 } else {
                     this.setState({
                         error: true

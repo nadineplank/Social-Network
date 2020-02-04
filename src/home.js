@@ -6,6 +6,7 @@ import ProfilePic from "./profilePic";
 import Profile from "./profile";
 import Uploader from "./uploader";
 import { OtherProfile } from "./other-profile";
+import FindPeople from "./find-people.js";
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -17,10 +18,14 @@ export default class Home extends React.Component {
         this.setBio = this.setBio.bind(this); */
         }
     }
+    toggleState() {
+        this.setState({
+            uploaderVisible: !this.state.uploaderVisible
+        });
+    }
+
     componentDidMount() {
         axios.get("/user").then(({ data }) => {
-            console.log("data", data);
-
             this.setState(data);
         });
     }
@@ -35,9 +40,7 @@ export default class Home extends React.Component {
                     <div>
                         <img src="/logo.png" alt="Logo" />
                         <ProfilePic
-                            showUploader={() =>
-                                this.setState({ uploaderVisible: true })
-                            }
+                            toggleState={() => this.toggleState()}
                             image={this.state.image}
                             first={this.state.first}
                             last={this.state.last}
@@ -47,6 +50,7 @@ export default class Home extends React.Component {
                                 setImageUrl={image => this.setState({ image })}
                             />
                         )}
+
                         <div>
                             <Route
                                 exact
@@ -57,7 +61,7 @@ export default class Home extends React.Component {
                                         first={this.state.first}
                                         last={this.state.last}
                                         image={this.state.image}
-                                        onClick={this.uploaderVisible}
+                                        toggleState={() => this.toggleState()}
                                         bio={this.state.bio}
                                         setBio={bio => this.setState({ bio })}
                                     />
@@ -65,6 +69,7 @@ export default class Home extends React.Component {
                             />
 
                             <Route path="/user/:id" component={OtherProfile} />
+                            <Route path="/users" component={FindPeople} />
                         </div>
                     </div>
                 </BrowserRouter>

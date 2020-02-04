@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProfilePic(props) {
     let name = props.first + " " + props.last;
-    const showUploader = props.showUploader;
+    const toggleState = props.toggleState;
 
     return (
         <div>
@@ -10,7 +10,7 @@ export default function ProfilePic(props) {
                 className="profilepic"
                 src={props.image}
                 alt={name}
-                onClick={showUploader}
+                onClick={toggleState}
             />
         </div>
     );

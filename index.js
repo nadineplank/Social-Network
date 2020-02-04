@@ -11,7 +11,9 @@ const {
     storeCode,
     updateImage,
     setBio,
-    otherUser
+    getOtherUser,
+    findPeople,
+    newUsers
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -248,10 +250,8 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 app.post("/setBio", (req, res) => {
     let bio = req.body.bio,
         id = req.session.userId;
-    console.log("bio: ", bio);
     setBio(bio, id)
         .then(data => {
-            console.log("data from setBio: ", data);
             res.json(data.rows[0].bio);
         })
         .catch(err => {
@@ -261,19 +261,40 @@ app.post("/setBio", (req, res) => {
 
 app.get("/user/:id.json", (req, res) => {
     let id = req.params.id,
-        userId = req.session.id;
-    console.log("id: ", id);
-    otherUser(id).then(data => {
-        console.log("otherUser: ", data);
-        res.json({
-            first: data[0].first,
-            last: data[0].last,
-            image: data[0].image || "/default.png",
-            bio: data[0].bio,
-            userId: userId,
-            id: data[0].id
+        userId = req.session.userId;
+    getOtherUser(id)
+        .then(data => {
+            res.json({
+                first: data[0].first,
+                last: data[0].last,
+                image: data[0].image || "/default.png",
+                bio: data[0].bio,
+                userId: userId,
+                id: data[0].id
+            });
+        })
+        .catch(err => {
+            console.log("err in GET user/:id: ", err);
+            res.redirect("/");
         });
-    });
+});
+
+app.get("/findpeople/:name", async (req, res) => {
+    try {
+        const data = await findPeople(req.params.name);
+        res.json(data);
+    } catch (err) {
+        console.log("err in GET /findpeople: ", err);
+    }
+});
+
+app.get("/newUsers", async (req, res) => {
+    try {
+        const data = await newUsers();
+        res.json(data);
+    } catch (err) {
+        console.log("error in GET /newUsers: ", err);
+    }
 });
 
 app.get("/logout", (req, res) => {

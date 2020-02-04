@@ -9,19 +9,23 @@ export class OtherProfile extends React.Component {
 
     componentDidMount() {
         //here we want to make a request to server to get all the info about the requested user...
-        console.log("this.props.match", this.props.match.params.id);
         const id = this.props.match.params.id;
         //we want the server to send back all info about requested user.
         // AND the id of the currently logged in user
         // IF these are the same.. we need to redirect them back to the /
-        axios.get("/user/" + id + ".json").then(({ data }) => {
-            console.log("data", data);
-            if (id === data.userId || data.userId === null) {
+        axios
+            .get("/user/" + id + ".json")
+            .then(({ data }) => {
+                if (id == data.userId) {
+                    this.props.history.push("/");
+                } else {
+                    this.setState(data);
+                }
+            })
+            .catch(err => {
+                console.log("err in otherProfile: ", err);
                 this.props.history.push("/");
-            } else {
-                this.setState(data);
-            }
-        });
+            });
 
         //we also want to redirect when the user doesnt exist..
     }

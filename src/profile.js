@@ -13,9 +13,7 @@ export default class Profile extends React.Component {
         return (
             <div className="profile">
                 <ProfilePic
-                    showUploader={() =>
-                        this.setState({ uploaderVisible: true })
-                    }
+                    toggleState={this.props.toggleState}
                     image={this.props.image}
                 />
                 {this.state.uploaderVisible && (
