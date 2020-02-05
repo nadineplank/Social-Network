@@ -18,7 +18,7 @@ export default class Welcome extends React.Component {
                 <div className="overlay"></div>
                 <div className="auth-container">
                     <div className="auth-wrapper">
-                        <h1 id="header">WELCOME</h1>
+                        <h1 id="header">Grow Wild</h1>
                         {/*
                             // <img id="logo" src="/logo.png" />
                             */}
