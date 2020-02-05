@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ export default class Login extends React.Component {
     }
 
     handleChange(e) {
-        /// this[e.target.name] = e.target.value;
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -36,19 +36,31 @@ export default class Login extends React.Component {
                 {this.state.error && (
                     <div className="error">Email or Password wrong!</div>
                 )}
-                <input
-                    name="email"
-                    placeholder="email address"
-                    type="email"
-                    onChange={e => this.handleChange(e)}
-                />
-                <input
-                    name="password"
-                    placeholder="password"
-                    type="password"
-                    onChange={e => this.handleChange(e)}
-                />
-                <button onClick={() => this.login()}>Log in</button>
+                <div className="auth-input-container">
+                    <input
+                        className="auth-input"
+                        name="email"
+                        placeholder="email address"
+                        type="email"
+                        onChange={e => this.handleChange(e)}
+                    />
+                    <input
+                        className="auth-input"
+                        name="password"
+                        placeholder="password"
+                        type="password"
+                        onChange={e => this.handleChange(e)}
+                    />
+                </div>
+                <div className="btn-container">
+                    <button className="auth-btn" onClick={() => this.login()}>
+                        Log in
+                    </button>
+                    <div id="reset">
+                        <p>Forgot your password?</p>
+                        <Link to="/resetPassword">reset</Link>
+                    </div>
+                </div>
             </div>
         );
     }

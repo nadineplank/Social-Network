@@ -16,8 +16,6 @@ export default class Registration extends React.Component {
     }
 
     submit() {
-        /// axios.post('/register', this.state);
-
         axios
             .post("/register", {
                 first: this.state.first,
@@ -26,12 +24,9 @@ export default class Registration extends React.Component {
                 password: this.state.password
             })
             .then(({ data }) => {
-                console.log("data: ", data);
                 if (data.id) {
-                    // it worked
                     location.replace("/");
                 } else {
-                    // failure
                     this.setState({
                         error: true
                     });
@@ -45,37 +40,43 @@ export default class Registration extends React.Component {
                 {this.state.error && (
                     <div className="error">Oops! Something went wrong!</div>
                 )}
-                <input
-                    name="first"
-                    placeholder="first name"
-                    onChange={e => this.handleChange(e)}
-                />
-                <input
-                    name="last"
-                    placeholder="last name"
-                    onChange={e => this.handleChange(e)}
-                />
-                <input
-                    name="email"
-                    placeholder="email address"
-                    type="email"
-                    onChange={e => this.handleChange(e)}
-                />
-                <input
-                    name="password"
-                    placeholder="password"
-                    type="password"
-                    onChange={e => this.handleChange(e)}
-                />
+                <div className="auth-input-container">
+                    <input
+                        className="auth-input"
+                        name="first"
+                        placeholder="first name"
+                        onChange={e => this.handleChange(e)}
+                    />
+                    <input
+                        className="auth-input"
+                        name="last"
+                        placeholder="last name"
+                        onChange={e => this.handleChange(e)}
+                    />
 
-                <button onClick={() => this.submit()}>register</button>
-                <div id="login">
-                    <p>Already a member? </p>
-                    <Link to="/login">Log in</Link>
+                    <input
+                        className="auth-input"
+                        name="email"
+                        placeholder="email address"
+                        type="email"
+                        onChange={e => this.handleChange(e)}
+                    />
+                    <input
+                        className="auth-input"
+                        name="password"
+                        placeholder="password"
+                        type="password"
+                        onChange={e => this.handleChange(e)}
+                    />
                 </div>
-                <div id="reset">
-                    <p>Forgot your password?</p>
-                    <Link to="/resetPassword">Reset password</Link>
+
+                <div className="btn-container">
+                    <Link className="auth-btn" to="/login">
+                        log in
+                    </Link>
+                    <button className="auth-btn" onClick={() => this.submit()}>
+                        register
+                    </button>
                 </div>
             </div>
         );

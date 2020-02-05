@@ -63,7 +63,7 @@ export default function findPeople() {
             <input onChange={onChange} type="text" placeholder="enter name" />
             {users.map((user, idx) => {
                 return (
-                    <a className="newUser" hred={`/user/${user.id}`} key={idx}>
+                    <a className="newUser" href={`/user/${user.id}`} key={idx}>
                         <div className="profile" key={idx}>
                             <img className="profilePic" src={user.image} />
 

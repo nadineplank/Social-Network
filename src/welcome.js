@@ -1,6 +1,7 @@
 import React from "react";
 import Registration from "./registration";
 import Login from "./login";
+
 import ResetPassword from "./reset";
 import { HashRouter, Route } from "react-router-dom";
 
@@ -10,20 +11,29 @@ export default class Welcome extends React.Component {
     }
     render() {
         return (
-            <div id="welcome">
-                <h1>Welcome</h1>
-                <img src="/logo.png" />
-                <HashRouter>
-                    <div>
-                        <Route exact path="/" component={Registration} />
-                        <Route exact path="/login" component={Login} />
-                        <Route
-                            exact
-                            path="/resetPassword"
-                            component={ResetPassword}
-                        />
+            <div>
+                <div className="background-container">
+                    <img className="gif-background" src="background.gif" />
+                </div>
+                <div className="overlay"></div>
+                <div className="auth-container">
+                    <div className="auth-wrapper">
+                        <h1 id="header">WELCOME</h1>
+                        {/*
+                            // <img id="logo" src="/logo.png" />
+                            */}
+
+                        <HashRouter>
+                            <Route exact path="/" component={Registration} />
+                            <Route exact path="/login" component={Login} />
+                            <Route
+                                exact
+                                path="/resetPassword"
+                                component={ResetPassword}
+                            />
+                        </HashRouter>
                     </div>
-                </HashRouter>
+                </div>
             </div>
         );
     }
