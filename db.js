@@ -92,9 +92,13 @@ exports.getOtherUser = function(id) {
 exports.findPeople = function(val) {
     return db
         .query(
-            `SELECT first, last, image, id, bio
-        FROM users
-        WHERE first ILIKE $1;`,
+            `SELECT * FROM users
+            WHERE first ILIKE $1
+            OR last ILIKE $1
+            OR CONCAT(first, ' ', last)
+            ILIKE $1
+            ORDER BY id
+            LIMIT 4`,
             [val + "%"]
         )
         .then(({ rows }) => rows);
@@ -105,7 +109,59 @@ exports.newUsers = function() {
         .query(
             `SELECT first, last, image, id, bio
         FROM users
-        ORDER BY id DESC LIMIT 3.`
+        ORDER BY id DESC LIMIT 3`
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.getFriendStatus = function(recipient_id, sender_id) {
+    return db
+        .query(
+            `SELECT * FROM friendships
+            WHERE (recipient_id = $1
+            AND sender_id = $2)
+            OR (recipient_id = $2
+            AND sender_id = $1)`,
+            [recipient_id, sender_id]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.makeFriendReq = function(recipient_id, sender_id) {
+    return db
+        .query(
+            `INSERT INTO friendships (recipient_id, sender_id)
+        VALUES ($1, $2)
+        RETURNING id`,
+            [recipient_id, sender_id]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.acceptFriendReq = function(recipient_id, sender_id) {
+    return db
+        .query(
+            `UPDATE friendships
+        SET accepted = true
+        WHERE (recipient_id = $1
+            AND sender_id = $2)
+            OR (recipient_id = $2
+            AND sender_id = $1)
+            RETURNING id`,
+            [recipient_id, sender_id]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.endFriendship = function(recipient_id, sender_id) {
+    return db
+        .query(
+            `DELETE FROM friendships
+        WHERE (recipient_id = $1
+            AND sender_id = $2)
+            OR (recipient_id = $2
+            AND sender_id = $1)`,
+            [recipient_id, sender_id]
         )
         .then(({ rows }) => rows);
 };
