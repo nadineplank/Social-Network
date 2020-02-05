@@ -3,6 +3,12 @@
     margin: 0;
     font-family: "Montserrat-medium", sans-serif;
 }
+
+@font-face {
+    font-family: "tomatoSoup";
+    src: url(./fonts/TomatoSoup-Regular.ttf) format("truetype");
+}
+
 img {
     height: 200px;
 }
@@ -15,6 +21,9 @@ input {
     color: white;
     letter-spacing: 0.3rem;
     font-weight: 400;
+    font-family: "tomatoSoup";
+    font-size: 270px;
+    height: 25%;
 }
 
 #welcome {
@@ -96,6 +105,8 @@ input {
 
 .auth-input:focus {
     background: rgba(0, 0, 0, 0.2);
+    border-bottom: white solid 1px;
+    outline: none;
 }
 
 .auth-input::placeholder {
@@ -105,7 +116,7 @@ input {
 .auth-input-container {
     display: flex;
     margin: 20px;
-    margin-top: 150px;
+    margin-top: 170px;
 }
 
 .btn-container {
@@ -119,7 +130,6 @@ input {
     width: 200px;
     background: none;
     border: white solid 1.5px;
-    margin: 1.5rem 1.5rem 0 0;
     font-weight: 400;
     font-family: "Montserrat-medium", sans-serif;
     font-size: 15px;
