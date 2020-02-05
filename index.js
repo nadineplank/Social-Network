@@ -13,7 +13,11 @@ const {
     setBio,
     getOtherUser,
     findPeople,
-    newUsers
+    newUsers,
+    getFriendStatus,
+    makeFriendReq,
+    acceptFriendReq,
+    endFriendship
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -130,19 +134,18 @@ app.post("/login", (req, res) => {
                 if (result) {
                     req.session.userId = data[0].id;
                     req.session.email = data[0].email;
-                    // if (data[0].id) {
-                    //     req.session.profileId = data[0].id;
-                    // }
-                    res.json(data[0]);
+                    res.json({ success: true });
                 } else {
                     // - if there is no match, re-render the template with an error message
-                    res.json(false);
+                    res.json({ success: false });
                 }
             });
         })
         .catch(err => {
             console.log("error in login: ", err);
-            res.json(false);
+            res.json({
+                success: false
+            });
         });
 });
 
@@ -268,7 +271,7 @@ app.get("/user/:id.json", (req, res) => {
                 first: data[0].first,
                 last: data[0].last,
                 image: data[0].image || "/default.png",
-                bio: data[0].bio,
+                bio: data[0].bio || "no bio yet",
                 userId: userId,
                 id: data[0].id
             });
@@ -294,6 +297,65 @@ app.get("/newUsers", async (req, res) => {
         res.json(data);
     } catch (err) {
         console.log("error in GET /newUsers: ", err);
+    }
+});
+
+// friendships
+
+app.get("/friends-status/:id", async (req, res) => {
+    let sender_id = req.session.userId,
+        recipient_id = req.params.id;
+    console.log("GET /friends-status/:id hit");
+    try {
+        const data = await getFriendStatus(recipient_id, sender_id);
+        console.log("Data from GET /friends-status: ", data);
+        res.json(data[0]);
+    } catch (err) {
+        console.log("error in GET /friend-status: ", err);
+    }
+});
+
+app.post("/make-friend-request/:id", async (req, res) => {
+    let sender_id = req.session.userId,
+        recipient_id = req.params.id;
+    try {
+        const data = await makeFriendReq(recipient_id, sender_id);
+        console.log("Data from GET /makeFriendReq: ", data);
+        res.json({
+            success: true
+        });
+    } catch (err) {
+        console.log("error in GET /makeFriendReq: ", err);
+    }
+});
+
+app.post("/accept-friend-request/:id", async (req, res) => {
+    let sender_id = req.session.userId,
+        recipient_id = req.params.id;
+    try {
+        const data = await acceptFriendReq(recipient_id, sender_id);
+        console.log("Data from GET /acceptFriendReq: ", data);
+        res.json({
+            success: true,
+            data
+        });
+    } catch (err) {
+        console.log("error in GET /acceptFriendReq: ", err);
+    }
+});
+
+app.post("/end-friendship/:id", async (req, res) => {
+    let sender_id = req.session.userId,
+        recipient_id = req.params.id;
+    try {
+        const data = await endFriendship(recipient_id, sender_id);
+        console.log("Data from GET /endFriendReq: ", data);
+        res.json({
+            success: true,
+            data
+        });
+    } catch (err) {
+        console.log("error in GET /endFriendReq: ", err);
     }
 });
 

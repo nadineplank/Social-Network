@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import FriendButton from "./friend-button";
 
 export class OtherProfile extends React.Component {
     constructor() {
@@ -8,11 +9,8 @@ export class OtherProfile extends React.Component {
     }
 
     componentDidMount() {
-        //here we want to make a request to server to get all the info about the requested user...
         const id = this.props.match.params.id;
-        //we want the server to send back all info about requested user.
-        // AND the id of the currently logged in user
-        // IF these are the same.. we need to redirect them back to the /
+
         axios
             .get("/user/" + id + ".json")
             .then(({ data }) => {
@@ -33,7 +31,6 @@ export class OtherProfile extends React.Component {
     render() {
         return (
             <div className="profile">
-                <h1>Hello from other profile..</h1>
                 <img
                     src={this.state.image}
                     alt={(this.state.first, " ", this.state.last)}
@@ -43,6 +40,7 @@ export class OtherProfile extends React.Component {
                 </p>
 
                 <p className="bio">{this.state.bio}</p>
+                <FriendButton userId={this.state.userId} />
             </div>
         );
     }
