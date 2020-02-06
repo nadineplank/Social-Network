@@ -15,7 +15,7 @@ export class OtherProfile extends React.Component {
             .get("/user/" + id + ".json")
             .then(({ data }) => {
                 if (!data.success) {
-                    this.props.history.push("/nomatch");
+                    this.props.history.push("/404");
                 } else if (id == data.userId) {
                     this.props.history.push("/");
                 } else if (data.success) {
@@ -24,7 +24,7 @@ export class OtherProfile extends React.Component {
             })
             .catch(err => {
                 console.log("err in otherProfile: ", err);
-                this.props.history.push("/nomatch");
+                this.props.history.push("/404");
             });
 
         //we also want to redirect when the user doesnt exist..
@@ -42,7 +42,10 @@ export class OtherProfile extends React.Component {
                 </p>
 
                 <p className="bio">{this.state.bio}</p>
-                <FriendButton userId={this.state.userId} />
+                <FriendButton
+                    userId={this.state.userId}
+                    recipient={this.state.id}
+                />
             </div>
         );
     }

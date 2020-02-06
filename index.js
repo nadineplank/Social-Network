@@ -184,7 +184,6 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
     let email = req.body.email,
         code = req.body.code,
         password = req.body.password;
-    console.log("email: ", email);
 
     // compare code with code from database and insert new password
     verify(email)
@@ -306,13 +305,11 @@ app.get("/newUsers", async (req, res) => {
 
 // friendships
 
-app.get("/friends-status/:id", async (req, res) => {
+app.get("/friend-status/:id", async (req, res) => {
     let sender_id = req.session.userId,
         recipient_id = req.params.id;
-    console.log("GET /friends-status/:id hit");
     try {
         const data = await getFriendStatus(recipient_id, sender_id);
-        console.log("Data from GET /friends-status: ", data);
         res.json(data[0]);
     } catch (err) {
         console.log("error in GET /friend-status: ", err);

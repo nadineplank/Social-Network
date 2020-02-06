@@ -10,10 +10,10 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className="nav-bar">
-                <img src="/logo.png" alt="Logo" />
+                <h1 id="logo">Grow Wild</h1>
 
                 <img
-                    className="profilePicHeader"
+                    id="profilePic"
                     src={this.props.image}
                     alt={`${this.props.name} ${this.props.last}`}
                     onClick={this.props.toggleState}
@@ -23,6 +23,10 @@ export default class Header extends React.Component {
                 {this.state.uploaderVisible && (
                     <Uploader setImageUrl={image => this.setState({ image })} />
                 )}
+
+                <a href="/logout">
+                    <i className="fas fa-sign-out-alt"></i>
+                </a>
             </div>
         );
     }

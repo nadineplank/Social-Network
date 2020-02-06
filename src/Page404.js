@@ -1,23 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function Page404() {
     return (
-        <div className="wrap-404">
+        <div className="wrapper404">
             <svg>
-                <pattern
-                    id="pattern"
-                    viewBox="0 0 300 100"
-                    patternUnits="userSpaceOnUse"
-                    width="750"
-                    height="800"
-                >
-                    <img className="background404" src="background.gif" />
-                </pattern>
-                <text x="0" y="80" className="text-404">
+                <defs>
+                    <pattern
+                        id="gif"
+                        patternUnits="userSpaceOnUse"
+                        width="100vw"
+                        height="100vh"
+                    >
+                        <image xlinkHref="background.gif" />
+                    </pattern>
+                </defs>
+                <text y="50%" x="33.4%">
                     404
                 </text>
             </svg>
+            <div id="back-container">
+                <a id="back" href="/">
+                    BACK
+                </a>
+            </div>
         </div>
     );
 }
