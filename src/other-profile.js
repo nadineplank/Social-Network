@@ -14,9 +14,11 @@ export class OtherProfile extends React.Component {
         axios
             .get("/user/" + id + ".json")
             .then(({ data }) => {
-                if (id == data.userId) {
+                if (!data.success) {
                     this.props.history.push("/nomatch");
-                } else {
+                } else if (id == data.userId) {
+                    this.props.history.push("/");
+                } else if (data.success) {
                     this.setState(data);
                 }
             })

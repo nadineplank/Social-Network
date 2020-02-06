@@ -26,7 +26,7 @@ input {
     height: 25%;
 }
 
-#welcome {
+# #welcome {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,4 +163,40 @@ input {
 #reset a {
     color: white;
     text-decoration: none;
+}
+
+/* 404 */
+
+.wrap-404 {
+    background: #1d1f20;
+    padding: 50px;
+    overflow: hidden;
+    color: #fff;
+
+    margin: 0;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+.background404 {
+}
+
+#pattern {
+    width: 750;
+    height: 800;
+    viewbox: 0 0 300 100;
+    patternunits: userSpaceOnUse;
+}
+svg {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    font: bold 100px sans-serif;
+    text-transform: uppercase;
+}
+.text-404 {
+    fill: url(#p-img);
 }

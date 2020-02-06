@@ -6,16 +6,28 @@ import Uploader from "./uploader";
 import { OtherProfile } from "./other-profile";
 import FindPeople from "./find-people";
 import Header from "./header";
+import Page404 from "./Page404";
 
-const Page404 = () => (
-    <div>
-        <img className="gif-background" src="background.gif" />
-        <p id="text404">404</p>
-        <p style={{ textAlign: "center" }}>
-            <Link to="/">Go to Home </Link>
-        </p>
-    </div>
-);
+// const Page404 = () => (
+//     <div>
+//         <div className="wrap-404">
+//             <svg>
+//                 <pattern
+//                     id="pattern"
+//                     viewBox="0 0 300 100"
+//                     patternUnits="userSpaceOnUse"
+//                     width="750"
+//                     height="800"
+//                 >
+//                     <img className="gif-background" src="background.gif" />
+//                 </pattern>
+//                 <text x="0" y="80" className="text-404">
+//                     404
+//                 </text>
+//             </svg>
+//         </div>
+//     </div>
+// );
 
 export default class App extends React.Component {
     constructor(props) {
@@ -90,8 +102,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-// <Switch>
-//     <Route path="/404" component={PageNotFound} />
-//     <Redirect to="/404" />
-// </Switch>

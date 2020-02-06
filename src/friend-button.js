@@ -3,28 +3,25 @@ import axios from "./axios";
 
 export default function FriendButton(props) {
     const [buttonText, setButtonText] = useState("");
-    console.log("props.userId: ", props.userId);
 
     useEffect(() => {
         if (props.userId) {
             try {
                 (async () => {
-                    if (props.userId) {
-                        const { data } = await axios.get(
-                            "/friends-status/" + props.userId
-                        );
-                        console.log("Data: ", data[0]);
-                        if (!data[0]) {
-                            setButtonText("send friend request");
-                        } else if (data[0].accepted == false) {
-                            if (data[0].sender_id == props.userId) {
-                                setButtonText("accept friend request");
-                            } else if (data[0].recipient_id == props.userId) {
-                                setButtonText("cancel friend request");
-                            }
-                        } else if (data[0].accepted == true) {
-                            setButtonText("end friendship");
+                    const { data } = await axios.get(
+                        "/friends-status/" + props.userId
+                    );
+
+                    if (!data) {
+                        setButtonText("send friend request");
+                    } else if (data.accepted == false) {
+                        if (data.sender_id == props.userId) {
+                            setButtonText("cancel friend request");
+                        } else if (data.recipient_id == props.userId) {
+                            setButtonText("accept friend request");
                         }
+                    } else if (data.accepted == true) {
+                        setButtonText("end friendship");
                     }
                 })();
             } catch (err) {

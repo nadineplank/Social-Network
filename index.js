@@ -265,6 +265,7 @@ app.post("/setBio", (req, res) => {
 app.get("/user/:id.json", (req, res) => {
     let id = req.params.id,
         userId = req.session.userId;
+
     getOtherUser(id)
         .then(data => {
             res.json({
@@ -273,10 +274,14 @@ app.get("/user/:id.json", (req, res) => {
                 image: data[0].image || "/default.png",
                 bio: data[0].bio || "no bio yet",
                 userId: userId,
-                id: data[0].id
+                id: data[0].id,
+                success: true
             });
         })
         .catch(err => {
+            res.json({
+                success: false
+            });
             console.log("err in GET user/:id: ", err);
         });
 });
