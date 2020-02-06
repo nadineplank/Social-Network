@@ -48,7 +48,7 @@ export default function findPeople() {
                 return (
                     <a
                         className="newUser"
-                        hred={`/user/${newUser.id}`}
+                        href={`/user/${newUser.id}`}
                         key={idx}
                     >
                         <div className="profile" key={idx}>

@@ -15,14 +15,14 @@ export class OtherProfile extends React.Component {
             .get("/user/" + id + ".json")
             .then(({ data }) => {
                 if (id == data.userId) {
-                    this.props.history.push("/");
+                    this.props.history.push("/nomatch");
                 } else {
                     this.setState(data);
                 }
             })
             .catch(err => {
                 console.log("err in otherProfile: ", err);
-                this.props.history.push("/");
+                this.props.history.push("/nomatch");
             });
 
         //we also want to redirect when the user doesnt exist..

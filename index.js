@@ -278,7 +278,6 @@ app.get("/user/:id.json", (req, res) => {
         })
         .catch(err => {
             console.log("err in GET user/:id: ", err);
-            res.redirect("/");
         });
 });
 
