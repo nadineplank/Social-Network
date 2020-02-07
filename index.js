@@ -365,7 +365,7 @@ app.post("/end-friendship/:id", async (req, res) => {
     }
 });
 
-app.get("/friends", async (req, res) => {
+app.get("/friends-wannabe", async (req, res) => {
     let userId = req.session.userId;
     try {
         const data = await getFriends(userId);
