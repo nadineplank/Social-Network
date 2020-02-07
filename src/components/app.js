@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "../axios";
-import { Route, Link, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Profile from "./profile";
 import Uploader from "./uploader";
 import { OtherProfile } from "./other-profile";

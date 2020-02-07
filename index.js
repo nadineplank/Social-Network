@@ -159,7 +159,6 @@ app.post("/reset", requireLoggedOutUser, (req, res) => {
     let email = req.body.email,
         message = "Here is your code for reseting: " + secretCode;
 
-    // find the users email in the table
     getUser(email)
         .then(data => {
             if (data) {
@@ -190,19 +189,16 @@ app.post("/verify", requireLoggedOutUser, (req, res) => {
         code = req.body.code,
         password = req.body.password;
 
-    // compare code with code from database and insert new password
     verify(email)
         .then(data => {
             if (data[0].code === code) {
                 bcrypt
                     .hash(password)
                     .then(hashedPass => {
-                        // put the first, last, email and hashed password into the users table
                         updatePassword(email, hashedPass)
                             .then(function(data) {
                                 res.json(data);
                             })
-                            // upon failure, re-render the register template with an error message
                             .catch(function(err) {
                                 console.log("err in setNewPassword: ", err);
                                 res.json(false);
@@ -325,8 +321,7 @@ app.post("/make-friend-request/:id", async (req, res) => {
     let sender_id = req.session.userId,
         recipient_id = req.params.id;
     try {
-        const data = await makeFriendReq(recipient_id, sender_id);
-        console.log("Data from GET /makeFriendReq: ", data);
+        await makeFriendReq(recipient_id, sender_id);
         res.json({
             success: true
         });
@@ -340,7 +335,6 @@ app.post("/accept-friend-request/:id", async (req, res) => {
         recipient_id = req.params.id;
     try {
         const data = await acceptFriendReq(recipient_id, sender_id);
-        console.log("Data from GET /acceptFriendReq: ", data);
         res.json({
             success: true,
             data
@@ -355,7 +349,6 @@ app.post("/end-friendship/:id", async (req, res) => {
         recipient_id = req.params.id;
     try {
         const data = await endFriendship(recipient_id, sender_id);
-        console.log("Data from GET /endFriendReq: ", data);
         res.json({
             success: true,
             data
@@ -370,7 +363,6 @@ app.get("/friends-wannabe", async (req, res) => {
     try {
         const data = await getFriends(userId);
         res.json(data);
-        console.log("Data from GET /getFriends: ", data);
     } catch (err) {
         console.log("error in GET /getFriends: ", err);
     }

@@ -52,6 +52,7 @@ input {
     height: 70px;
     object-fit: cover;
     margin: 10px;
+    border-radius: 50%;
 }
 
 .fa-sign-out-alt {
