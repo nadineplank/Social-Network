@@ -7,6 +7,7 @@ import { OtherProfile } from "./other-profile";
 import FindPeople from "./find-people";
 import Header from "./header";
 import Page404 from "./Page404";
+import Friends from "./friends";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -62,6 +63,7 @@ export default class App extends React.Component {
 
                         <Route path="/user/:id" component={OtherProfile} />
                         <Route path="/users" component={FindPeople} />
+                        <Route path="/friends" component={Friends} />
                         <Route component={Page404} />
                     </Switch>
                 </div>

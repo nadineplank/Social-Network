@@ -19,9 +19,6 @@ export default class Welcome extends React.Component {
                 <div className="auth-container">
                     <div className="auth-wrapper">
                         <h1 id="header">Grow Wild</h1>
-                        {/*
-                            // <img id="logo" src="/logo.png" />
-                            */}
 
                         <HashRouter>
                             <Route exact path="/" component={Registration} />
