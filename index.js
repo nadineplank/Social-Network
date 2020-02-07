@@ -17,7 +17,8 @@ const {
     getFriendStatus,
     makeFriendReq,
     acceptFriendReq,
-    endFriendship
+    endFriendship,
+    getFriends
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -147,6 +148,10 @@ app.post("/login", (req, res) => {
                 success: false
             });
         });
+});
+
+app.get("/logout", (req, res) => {
+    (req.session.userId = null), res.redirect("/");
 });
 
 app.post("/reset", requireLoggedOutUser, (req, res) => {
@@ -360,8 +365,15 @@ app.post("/end-friendship/:id", async (req, res) => {
     }
 });
 
-app.get("/logout", (req, res) => {
-    (req.session.userId = null), res.redirect("/");
+app.get("/friends", async (req, res) => {
+    let userId = req.session.userId;
+    try {
+        const data = await getFriends(userId);
+        res.json(data);
+        console.log("Data from GET /getFriends: ", data);
+    } catch (err) {
+        console.log("error in GET /getFriends: ", err);
+    }
 });
 
 ////// HAS TO BE THE LAST ROUTE ///////

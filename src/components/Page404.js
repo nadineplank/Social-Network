@@ -14,7 +14,12 @@ export default function Page404() {
                         <image xlinkHref="background.gif" />
                     </pattern>
                 </defs>
-                <text y="50%" x="33.4%">
+                <text
+                    x="50%"
+                    y="45%"
+                    dominantBaseline="middle"
+                    textAnchor="middle"
+                >
                     404
                 </text>
             </svg>
