@@ -25,7 +25,7 @@ export default function Page404() {
             </svg>
             <div id="back-container">
                 <a id="back" href="/">
-                    BACK
+                    GO BACK
                 </a>
             </div>
         </div>

@@ -42,8 +42,21 @@ export default function findPeople() {
     return (
         <div>
             <h1>Find other people</h1>
-            <p>Checkout who just joined!</p>
 
+            <input onChange={onChange} type="text" placeholder="enter name" />
+            {users.map((user, idx) => {
+                return (
+                    <a className="newUser" href={`/user/${user.id}`} key={idx}>
+                        <div className="profile" key={idx}>
+                            <img className="profilePic" src={user.image} />
+
+                            <p className="name">{`${user.first} ${user.last}`}</p>
+                            <p>{user.bio}</p>
+                        </div>
+                    </a>
+                );
+            })}
+            <p>Checkout who just joined!</p>
             {newUsers.map((newUser, idx) => {
                 return (
                     <a
@@ -55,20 +68,6 @@ export default function findPeople() {
                             <img className="profilePic" src={newUser.image} />
 
                             <p className="name">{`${newUser.first} ${newUser.last}`}</p>
-                        </div>
-                    </a>
-                );
-            })}
-
-            <input onChange={onChange} type="text" placeholder="enter name" />
-            {users.map((user, idx) => {
-                return (
-                    <a className="newUser" href={`/user/${user.id}`} key={idx}>
-                        <div className="profile" key={idx}>
-                            <img className="profilePic" src={user.image} />
-
-                            <p className="name">{`${user.first} ${user.last}`}</p>
-                            <p>{user.bio}</p>
                         </div>
                     </a>
                 );
