@@ -35,6 +35,7 @@
         "multer": "^1.3.0",
         "react": "^16.9.0-alpha.0",
         "react-dom": "^16.9.0-alpha.0",
+        "react-dropzone": "^10.2.1",
         "react-redux": "^7.1.0",
         "react-router": "^5.0.1",
         "react-router-dom": "^5.0.1",
@@ -42,8 +43,9 @@
         "redux": "^3.7.1",
         "redux-devtools-extension": "^2.13.2",
         "redux-promise": "^0.5.3",
-        "socket.io": "^2.2.0",
+        "socket.io": "^2.3.0",
         "spiced-pg": "^1.0.0",
+        "superagent": "^5.2.1",
         "uid-safe": "^2.1.4",
         "webpack": "^4.29.6",
         "webpack-dev-middleware": "^1.8.4"

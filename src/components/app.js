@@ -2,7 +2,7 @@ import React from "react";
 import axios from "../axios";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Profile from "./profile";
-import Uploader from "./uploader";
+import Uploader from "../hooks/useDragAndDrop";
 import { OtherProfile } from "./other-profile";
 import FindPeople from "./find-people";
 import Header from "./header";
@@ -39,7 +39,10 @@ export default class App extends React.Component {
                     toggleState={() => this.toggleState()}
                 />
                 {this.state.uploaderVisible && (
-                    <Uploader setImageUrl={image => this.setState({ image })} />
+                    <Uploader
+                        setImageUrl={image => this.setState({ image })}
+                        toggleState={() => this.toggleState()}
+                    />
                 )}
                 <div>
                     <Switch>

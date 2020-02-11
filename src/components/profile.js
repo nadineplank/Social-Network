@@ -2,7 +2,7 @@ import React from "react";
 
 import Bio from "./bio";
 import ProfilePic from "./profilePic";
-import Uploader from "./uploader";
+import Uploader from "../hooks/useDragAndDrop";
 
 export default class Profile extends React.Component {
     constructor(props) {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Uploader from "./uploader";
+import Uploader from "../hooks/useDragAndDrop";
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -10,7 +10,14 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className="nav-bar">
-                <h1 id="logo">Grow Wild</h1>
+                <h1 id="logo">Grow</h1>
+                <a className="nav" href="/users">
+                    find friends
+                </a>
+
+                <a className="nav" href="/friends">
+                    friendships
+                </a>
 
                 <img
                     id="profilePic"
@@ -24,6 +31,7 @@ export default class Header extends React.Component {
                     <Uploader setImageUrl={image => this.setState({ image })} />
                 )}
 
+                <i className="fas fa-bars"></i>
                 <a href="/logout">
                     <i className="fas fa-sign-out-alt"></i>
                 </a>

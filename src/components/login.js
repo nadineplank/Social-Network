@@ -25,6 +25,7 @@ export default function Login() {
                     placeholder="password"
                     type="password"
                     onChange={handleChange}
+                    onKeyPress={e => this.handleKeyPress(e)}
                 />
             </div>
             <div className="btn-container">
