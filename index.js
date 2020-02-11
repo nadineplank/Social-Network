@@ -21,7 +21,9 @@ const {
     makeFriendReq,
     acceptFriendReq,
     endFriendship,
-    getFriends
+    getFriends,
+    getChatMessages,
+    storeMessages
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -401,6 +403,28 @@ io.on("connection", function(socket) {
     }
 
     const userId = socket.request.session.userId;
+
+    getChatMessages()
+        .then(data => {
+            io.sockets.emit("chatMessages", data);
+            console.log("Messages from db: ", data);
+        })
+        .catch(err => console.log(err));
+
+    socket.on("chat message", msg => {
+        console.log("on the server...", msg);
+
+        //lets emit this message to everyone
+        io.sockets.emit("incoming message", msg);
+        storeMessages(userId, msg)
+            .then(console.log("storing worked"))
+            .catch(err => {
+                console.log("error in storing message: ", err);
+            });
+    });
+
+    // go and get the last 10 chat messages from DB
+    //(we will nee a new table and query...)
 
     /* ... */
 });

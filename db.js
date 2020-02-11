@@ -180,3 +180,25 @@ exports.getFriends = function(userId) {
         )
         .then(({ rows }) => rows);
 };
+
+exports.getChatMessages = function() {
+    return db
+        .query(
+            `SELECT chat.id as id, user_id, first, last, image, message
+            FROM chat
+            JOIN users
+            ON chat.user_id = users.id
+            ORDER BY chat.id DESC
+            LIMIT 10`
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.storeMessages = function(id, message) {
+    return db.query(
+        `INSERT INTO chat (user_id, message)
+            VALUES ($1, $2)
+            RETURNING id`,
+        [id, message]
+    );
+};

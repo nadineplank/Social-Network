@@ -242,6 +242,19 @@ input {
     margin: 5px;
 }
 
+/* CHAT */
+
+.chat {
+}
+
+.chat-container {
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.chat-textarea {
+}
+
 /* 404 */
 
 image {

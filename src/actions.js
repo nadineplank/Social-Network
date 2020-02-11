@@ -24,3 +24,17 @@ export async function endFriendship(id) {
         id
     };
 }
+
+export function chatMessages(msgs) {
+    return {
+        type: "GET_MESSAGES",
+        chatMessages: msgs
+    };
+}
+
+export function chatMessage(data) {
+    return {
+        type: "INSERT_MESSAGE",
+        message: data
+    };
+}
