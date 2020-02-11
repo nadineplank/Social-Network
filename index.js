@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
-const compression = require("compression");
+const server = require("http").Server(app);
 const cookieSession = require("cookie-session");
+const io = require("socket.io")(server, { origins: "localhost:8080" });
+
+const compression = require("compression");
 const bcrypt = require("./bcrypt");
 const {
     addUser,
@@ -45,12 +48,16 @@ if (process.env.NODE_ENV != "production") {
 
 app.use(express.json());
 
-app.use(
-    cookieSession({
-        secret: secrets.SESSION_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: secrets.SESSION_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -92,6 +99,8 @@ app.use(function(req, res, next) {
     res.cookie("mytoken", req.csrfToken());
     next();
 });
+
+// AUTH //
 
 app.get("/register", function(req, res) {
     if (req.session.userId) {
@@ -379,6 +388,19 @@ app.get("*", function(req, res) {
 
 //////////////////////////////////////
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
+});
+
+// SERVER SIDE SOCKET CODE //
+
+io.on("connection", function(socket) {
+    console.log(`socket with the id ${socket.id} is now connected`);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+
+    /* ... */
 });
