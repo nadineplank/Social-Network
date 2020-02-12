@@ -1,8 +1,6 @@
 import React from "react";
-
 import Bio from "./bio";
 import ProfilePic from "./profilePic";
-import Uploader from "../hooks/useDragAndDrop";
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -11,23 +9,25 @@ export default class Profile extends React.Component {
     }
     render() {
         return (
-            <div className="profile">
-                <ProfilePic
-                    toggleState={this.props.toggleState}
-                    image={this.props.image}
-                />
-                {this.state.uploaderVisible && (
-                    <Uploader setImageUrl={image => this.setState({ image })} />
-                )}
-                <p>
-                    {this.props.first} {this.props.last}
-                </p>
+            <div className="profile-container">
+                <div className="profile">
+                    <ProfilePic
+                        toggleState={this.props.toggleState}
+                        image={this.props.image}
+                    />
 
-                <Bio
-                    editBio={() => this.setState({ setBio: true })}
-                    bio={this.props.bio}
-                    setBio={this.props.setBio}
-                />
+                    <div className="bio">
+                        <p className="username">
+                            {this.props.first} {this.props.last}
+                        </p>
+
+                        <Bio
+                            editBio={() => this.setState({ setBio: true })}
+                            bio={this.props.bio}
+                            setBio={this.props.setBio}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

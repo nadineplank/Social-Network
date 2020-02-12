@@ -401,19 +401,18 @@ io.on("connection", function(socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
-
+    let currentUser = socket.id;
     const userId = socket.request.session.userId;
 
     getChatMessages()
         .then(data => {
+            data = data.reverse();
             io.sockets.emit("chatMessages", data);
-            console.log("Messages from db: ", data);
+            io.to(currentUser).emit("setId", userId);
         })
         .catch(err => console.log(err));
 
     socket.on("chat message", msg => {
-        console.log("on the server...", msg);
-
         //lets emit this message to everyone
         io.sockets.emit("incoming message", msg);
         storeMessages(userId, msg)
@@ -422,9 +421,4 @@ io.on("connection", function(socket) {
                 console.log("error in storing message: ", err);
             });
     });
-
-    // go and get the last 10 chat messages from DB
-    //(we will nee a new table and query...)
-
-    /* ... */
 });

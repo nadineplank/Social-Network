@@ -1,5 +1,5 @@
 import * as io from "socket.io-client";
-import { chatMessages, chatMessage } from "./actions";
+import { chatMessages, chatMessage, setId } from "./actions";
 
 export let socket;
 
@@ -14,5 +14,7 @@ export const init = store => {
         socket.on("incoming message", msg => {
             console.log("can everyone see this?", msg);
         });
+
+        socket.on("setId", userId => store.dispatch(setId(userId)));
     }
 };

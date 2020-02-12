@@ -1,7 +1,5 @@
 import React from "react";
 
-import Uploader from "../hooks/useDragAndDrop";
-
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -19,22 +17,12 @@ export default class Header extends React.Component {
                     friendships
                 </a>
 
-                <img
-                    id="profilePic"
-                    src={this.props.image}
-                    alt={`${this.props.name} ${this.props.last}`}
-                    onClick={this.props.toggleState}
-                    first={this.props.first}
-                    last={this.props.last}
-                />
-                {this.state.uploaderVisible && (
-                    <Uploader setImageUrl={image => this.setState({ image })} />
-                )}
-
-                <i className="fas fa-bars"></i>
-                <a href="/logout">
-                    <i className="fas fa-sign-out-alt"></i>
+                <a className="nav" href="/chat">
+                    <i className="far fa-comments"></i>
                 </a>
+                <i className="fas fa-search" onClick={this.props.showSearch} />
+
+                <i className="fas fa-bars" onClick={this.props.showMenu} />
             </div>
         );
     }

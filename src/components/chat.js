@@ -4,27 +4,19 @@ import { useSelector } from "react-redux";
 
 export function Chat() {
     let chatMessages = useSelector(state => state && state.chatMessages);
-    chatMessages = chatMessages.reverse();
-    console.log("chatMessages: ", chatMessages);
+    let user = useSelector(state => state.id);
 
     const elemRef = useRef();
 
     useEffect(() => {
-        console.log("chat mounted!!!");
-        console.log("elemRef: ", elemRef);
-        let { clientHeight, scrollTop, scrollHeight } = elemRef.current;
+        let { clientHeight, scrollHeight } = elemRef.current;
 
-        console.log("scroll top", scrollTop);
-        console.log("client height", clientHeight);
-        console.log("scroll height", scrollHeight);
         elemRef.current.scrollTop = scrollHeight - clientHeight;
     }, [chatMessages]);
 
     const keyCheck = e => {
         if (e.key === "Enter") {
             e.preventDefault(); // stops the annoyong moving to a new line
-            console.log("what the user is typing: ", e.target.value);
-            console.log("which key is user pressed...", e.key);
             socket.emit("chat message", e.target.value);
             e.target.value = "";
         }
@@ -41,16 +33,33 @@ export function Chat() {
                 {chatMessages.length > 0 &&
                     chatMessages.map((i, idx) => {
                         return (
-                            <div className="chat-block" key={idx}>
-                                <a href={`user/${i.user_id}`}>
-                                    <div>
-                                        <img src={i.image || "/default.png"} />
-                                        <p>
-                                            {i.first} {i.last}
-                                        </p>
-                                    </div>
+                            <div
+                                className={
+                                    i.user_id == user
+                                        ? "chat-block-right"
+                                        : "chat-block-left"
+                                }
+                                key={idx}
+                            >
+                                <a
+                                    className="chat-user"
+                                    href={`user/${i.user_id}`}
+                                >
+                                    <img
+                                        className="chat-image"
+                                        src={i.image || "/default.png"}
+                                    />
+                                    {i.first} {i.last}
                                 </a>
-                                <p className="chat-message">{i.message}</p>
+                                <p
+                                    className={
+                                        i.user_id == user
+                                            ? "chat-message-right"
+                                            : "chat-message-left"
+                                    }
+                                >
+                                    {i.message}
+                                </p>
                             </div>
                         );
                     })}

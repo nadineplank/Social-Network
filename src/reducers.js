@@ -30,5 +30,12 @@ export default function reducer(state = {}, action) {
             chatMessages: state.chatMessages.concat(action.message)
         };
     }
+    if (action.type === "SET_ID") {
+        state = {
+            ...state,
+            id: action.id
+        };
+    }
+
     return state;
 }

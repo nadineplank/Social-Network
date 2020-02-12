@@ -23,6 +23,31 @@ input {
     align-items: center;
 }
 
+.profile-container {
+    display: flex;
+    background-color: honeydew;
+    justify-content: center;
+    height: 100vh;
+}
+
+.profile {
+    display: flex;
+    width: 70%;
+    height: 80%;
+    margin: 3%;
+}
+
+.profile-pic {
+}
+
+.username {
+}
+
+.bio-container {
+    display: flex;
+    flex-direction: column;
+}
+
 /* NAV */
 
 .nav-bar {
@@ -30,6 +55,7 @@ input {
     display: flex;
     align-items: center;
     height: 60px;
+    justify-content: space-between;
 }
 
 #welcome {
@@ -43,16 +69,16 @@ input {
     letter-spacing: 0.3rem;
     font-weight: 400;
     font-family: "tomatoSoup";
-    font-size: 75px;
+    font-size: 85px;
     margin: 5px;
     margin-left: 15px;
 }
 
 #profilePic {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    margin: 10px;
+    margin: 20px;
     border-radius: 50%;
 }
 
@@ -60,11 +86,31 @@ input {
     color: black;
     font-size: 25px;
 }
+.fa-bars {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.fa-comments {
+    font-size: 20px;
+}
 
 .nav {
     text-decoration: none;
     color: black;
     margin: 0 20px;
+}
+
+.menu {
+    position: fixed;
+    width: 20%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* LOGIN / REGISTER */
@@ -213,6 +259,7 @@ input {
     bottom: 20%;
     left: 20%;
     padding: 10px;
+    z-index: 1;
 }
 
 .dropzone {
@@ -245,14 +292,71 @@ input {
 /* CHAT */
 
 .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: honeydew;
 }
 
 .chat-container {
-    height: 100px;
+    height: 400px;
+    width: 700px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message-right {
+    background-color: white;
+    width: 40%;
+    padding: 8px;
+    border-radius: 15px;
+    padding-right: 10px;
+    align-self: flex-end;
+    margin: 15px;
+    box-shadow: -7px 7px 5px 0px rgba(0, 0, 0, 0.43);
+}
+
+.chat-message-left {
+    background-color: white;
+    width: 40%;
+    padding: 8px;
+    border-radius: 15px;
+    padding-left: 10px;
+    align-self: flex-end;
+    margin: 15px;
+    box-shadow: -7px 7px 5px 0px rgba(0, 0, 0, 0.43);
 }
 
 .chat-textarea {
+    width: 600px;
+    height: 100px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.chat-block-right {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.chat-block-left {
+    display: flex;
+}
+
+.chat-image {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.chat-user {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
 }
 
 /* 404 */
@@ -296,4 +400,50 @@ text {
 
 #back:hover {
     color: #11896b;
+}
+
+/* SEARCH */
+
+.searchfield {
+    position: inherit;
+}
+
+.search-background {
+    height: 100px;
+    width: 100vw;
+    top: 0;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.search-input {
+    color: white;
+    font-size: 60px;
+    position: absolute;
+    height: 100px;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: none;
+    outline: none;
+    padding: 20px;
+    padding-left: 80px;
+    z-index: 2;
+}
+
+.search-icon {
+    position: absolute;
+    color: black;
+    font-family: "Raleway", sans-sans-serif;
+    margin: 30px;
+    font-size: 40px;
+    z-index: 3;
+}
+
+.search-icon:hover {
+    display: inline-block;
+    cursor: pointer;
+    transform-origin: center center;
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1);
+    vertical-align: middle;
+    z-index: 4;
 }

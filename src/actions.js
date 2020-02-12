@@ -38,3 +38,10 @@ export function chatMessage(data) {
         message: data
     };
 }
+
+export function setId(id) {
+    return {
+        type: "SET_ID",
+        id: id
+    };
+}

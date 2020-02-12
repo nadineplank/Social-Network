@@ -7,7 +7,7 @@ export default function ProfilePic(props) {
     return (
         <div>
             <img
-                className="profilepic"
+                className="profile-pic"
                 src={props.image}
                 alt={name}
                 onClick={toggleState}

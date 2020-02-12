@@ -31,23 +31,19 @@ export default class Bio extends React.Component {
     }
     render() {
         return (
-            <div className="bio-container">
+            <div>
                 {!this.props.bio && (
-                    <div>
-                        <button
-                            onClick={() =>
-                                this.setState({ editorVisible: true })
-                            }
-                        >
-                            ADD BIO
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => this.setState({ editorVisible: true })}
+                    >
+                        ADD BIO
+                    </button>
                 )}
 
                 {this.props.bio && (
                     <div>
                         {this.state.editorVisible == false && (
-                            <div>
+                            <div className="bio-container">
                                 {this.props.bio}
                                 <button
                                     onClick={() =>
