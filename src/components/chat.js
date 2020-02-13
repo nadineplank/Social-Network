@@ -10,7 +10,6 @@ export function Chat() {
 
     useEffect(() => {
         let { clientHeight, scrollHeight } = elemRef.current;
-
         elemRef.current.scrollTop = scrollHeight - clientHeight;
     }, [chatMessages]);
 
@@ -27,48 +26,54 @@ export function Chat() {
     }
 
     return (
-        <div className="chat">
-            <h1>Chat Room</h1>
-            <div className="chat-container" ref={elemRef}>
-                {chatMessages.length > 0 &&
-                    chatMessages.map((i, idx) => {
-                        return (
-                            <div
-                                className={
-                                    i.user_id == user
-                                        ? "chat-block-right"
-                                        : "chat-block-left"
-                                }
-                                key={idx}
-                            >
-                                <a
-                                    className="chat-user"
-                                    href={`user/${i.user_id}`}
-                                >
-                                    <img
-                                        className="chat-image"
-                                        src={i.image || "/default.png"}
-                                    />
-                                    {i.first} {i.last}
-                                </a>
-                                <p
+        <div className="chat-wrapper">
+            <div className="background-container">
+                <img className="gif-background" src="background2.gif" />
+            </div>
+
+            <div className="chat">
+                <h1 className="chat-header">Chat Room</h1>
+                <div className="chat-container" ref={elemRef}>
+                    {chatMessages.length > 0 &&
+                        chatMessages.map((i, idx) => {
+                            return (
+                                <div
                                     className={
                                         i.user_id == user
-                                            ? "chat-message-right"
-                                            : "chat-message-left"
+                                            ? "chat-block-right"
+                                            : "chat-block-left"
                                     }
+                                    key={idx}
                                 >
-                                    {i.message}
-                                </p>
-                            </div>
-                        );
-                    })}
+                                    <a
+                                        className="chat-user"
+                                        href={`user/${i.user_id}`}
+                                    >
+                                        <img
+                                            className="chat-image"
+                                            src={i.image || "/default.png"}
+                                        />
+                                        {i.first}
+                                    </a>
+                                    <p
+                                        className={
+                                            i.user_id == user
+                                                ? "chat-message-right"
+                                                : "chat-message-left"
+                                        }
+                                    >
+                                        {i.message}
+                                    </p>
+                                </div>
+                            );
+                        })}
+                </div>
+                <textarea
+                    className="chat-textarea"
+                    placeholer="Add your message here"
+                    onKeyDown={keyCheck}
+                ></textarea>
             </div>
-            <textarea
-                className="chat-textarea"
-                placeholer="Add your message here"
-                onKeyDown={keyCheck}
-            ></textarea>
         </div>
     );
 }

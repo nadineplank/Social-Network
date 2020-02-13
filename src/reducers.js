@@ -5,7 +5,7 @@ export default function reducer(state = {}, action) {
             friends: action.friends
         };
     }
-    if (action.type == "ACCEPT_FRIEND_REQ" || action.type == "END_FRIENDSHIP") {
+    if (action.type == "ACCEPT_FRIEND_REQ") {
         state = {
             ...state,
             friends: state.friends.map(friend => {
@@ -19,6 +19,13 @@ export default function reducer(state = {}, action) {
             })
         };
     }
+    if (action.type == "END_FRIENDSHIP") {
+        state = {
+            ...state,
+            friends: state.friends.filter(friend => friend.id != action.id)
+        };
+    }
+
     if (action.type === "GET_MESSAGES") {
         state = {
             chatMessages: action.chatMessages
@@ -29,6 +36,7 @@ export default function reducer(state = {}, action) {
             ...state,
             chatMessages: state.chatMessages.concat(action.message)
         };
+        console.log("state", state);
     }
     if (action.type === "SET_ID") {
         state = {

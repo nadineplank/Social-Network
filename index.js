@@ -23,7 +23,8 @@ const {
     endFriendship,
     getFriends,
     getChatMessages,
-    storeMessages
+    storeMessages,
+    getChatUser
 } = require("./db");
 const csurf = require("csurf");
 const { requireLoggedOutUser } = require("./middleware");
@@ -397,7 +398,6 @@ server.listen(8080, function() {
 // SERVER SIDE SOCKET CODE //
 
 io.on("connection", function(socket) {
-    console.log(`socket with the id ${socket.id} is now connected`);
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
@@ -412,13 +412,18 @@ io.on("connection", function(socket) {
         })
         .catch(err => console.log(err));
 
-    socket.on("chat message", msg => {
+    socket.on("chat message", async msg => {
+        const response = await getChatUser(userId);
+
+        await storeMessages(userId, msg);
+        let data = {
+            user_id: userId,
+            message: msg,
+            first: response.first,
+            image: response.image
+        };
         //lets emit this message to everyone
-        io.sockets.emit("incoming message", msg);
-        storeMessages(userId, msg)
-            .then(console.log("storing worked"))
-            .catch(err => {
-                console.log("error in storing message: ", err);
-            });
+        io.sockets.emit("incoming message", data);
+        console.log("message:", msg);
     });
 });

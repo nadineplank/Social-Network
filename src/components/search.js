@@ -17,7 +17,7 @@ export default function Search(props) {
                 placeholder="enter name"
                 onChange={onChange}
             />
-            <img className="search-background" src="background.gif" />
+            <img className="search-background" src="background0.gif" />
         </div>
     );
 }

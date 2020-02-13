@@ -26,64 +26,72 @@ export default function friendsWannabes() {
         return null;
     }
     const acceptedFriends = (
-        <div className="users">
+        <div className="friends">
             {friends.map(friend => (
                 <div className="user" key={friend.id}>
                     <a
-                        className="newUser"
+                        className="friend"
                         href={`/user/${friend.id}`}
                         key={friend.id}
                     >
-                        <img src={friend.image} />
+                        <img className="friend-pic" src={friend.image} />
                     </a>
-                    <div className="buttons">
-                        <button
-                            onClick={() => dispatch(endFriendship(friend.id))}
-                        >
-                            end friendship
-                        </button>
-                    </div>
+
+                    <button
+                        className="buttons"
+                        onClick={() => dispatch(endFriendship(friend.id))}
+                    >
+                        unfriend
+                    </button>
                 </div>
             ))}
         </div>
     );
 
     const wannabeFriends = (
-        <div className="users">
+        <div className="wannabes">
             {wannabes.map(wannabe => (
                 <div className="user" key={wannabe.id}>
                     <a
-                        className="newUser"
+                        className="friend"
                         href={`/user/${wannabe.id}`}
                         key={wannabe.id}
                     >
-                        <img src={wannabe.image} />
+                        <img className="friend-pic" src={wannabe.image} />
                     </a>
-                    <div className="buttons">
-                        <button
-                            onClick={() =>
-                                dispatch(acceptFriendRequest(wannabe.id))
-                            }
-                        >
-                            accept friend request
-                        </button>
-                    </div>
+
+                    <button
+                        className="buttons"
+                        onClick={() =>
+                            dispatch(acceptFriendRequest(wannabe.id))
+                        }
+                    >
+                        accept
+                    </button>
                 </div>
             ))}
         </div>
     );
 
     return (
-        <div className="container">
-            <div id="friends">
-                {!friends.length && <div>You have no friends yet!</div>}
-                {!!friends.length && acceptedFriends}
-            </div>
-            <div id="wannabes">
-                {!wannabes.length && (
-                    <div>No friend requests at the moment!</div>
-                )}
-                {!!wannabes.length && wannabeFriends}
+        <div className="background">
+            <div className="friends-container">
+                <div id="friends">
+                    <p className="header">Your friends</p>
+                    {!friends.length && (
+                        <p className="friend-status">You have no friends yet</p>
+                    )}
+                    {!!friends.length && acceptedFriends}
+                </div>
+                <div id="wannabes">
+                    <p className="header">open friend requests</p>
+                    {!wannabes.length && (
+                        <p className="friend-status">
+                            No friend requests at the moment
+                        </p>
+                    )}
+                    {!!wannabes.length && wannabeFriends}
+                </div>
             </div>
         </div>
     );

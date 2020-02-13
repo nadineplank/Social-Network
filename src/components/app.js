@@ -9,7 +9,6 @@ import Header from "./header";
 import Page404 from "./Page404";
 import Friends from "./friends";
 import { Chat } from "./chat";
-import Search from "./search";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -74,37 +73,35 @@ export default class App extends React.Component {
                         <a className="nav" href="/">
                             your profile
                         </a>
-                        <a href="/logout">
+                        <a className="signout" href="/logout">
                             <i className="fas fa-sign-out-alt"></i>
                         </a>
                     </div>
                 )}
 
-                <div className="background">
-                    <Switch>
-                        <Route
-                            exact
-                            path="/"
-                            render={() => (
-                                <Profile
-                                    id={this.state.id}
-                                    first={this.state.first}
-                                    last={this.state.last}
-                                    image={this.state.image}
-                                    toggleState={() => this.toggleState()}
-                                    bio={this.state.bio}
-                                    setBio={bio => this.setState({ bio })}
-                                />
-                            )}
-                        />
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <Profile
+                                id={this.state.id}
+                                first={this.state.first}
+                                last={this.state.last}
+                                image={this.state.image}
+                                toggleState={() => this.toggleState()}
+                                bio={this.state.bio}
+                                setBio={bio => this.setState({ bio })}
+                            />
+                        )}
+                    />
 
-                        <Route path="/user/:id" component={OtherProfile} />
-                        <Route path="/users" component={FindPeople} />
-                        <Route path="/friends" component={Friends} />
-                        <Route path="/chat" component={Chat} />
-                        <Route component={Page404} />
-                    </Switch>
-                </div>
+                    <Route path="/user/:id" component={OtherProfile} />
+                    <Route path="/users" component={FindPeople} />
+                    <Route path="/friends" component={Friends} />
+                    <Route path="/chat" component={Chat} />
+                    <Route component={Page404} />
+                </Switch>
             </BrowserRouter>
         );
     }

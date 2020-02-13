@@ -9,16 +9,20 @@ export default class Welcome extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
+        function randomBackground() {
+            return "background" + Math.floor(Math.random() * 4) + ".gif";
+        }
         return (
             <div>
                 <div className="background-container">
-                    <img className="gif-background" src="background.gif" />
+                    <img className="gif-background" src={randomBackground()} />
                 </div>
                 <div className="overlay"></div>
                 <div className="auth-container">
                     <div className="auth-wrapper">
-                        <h1 id="header">Grow Wild</h1>
+                        <h1 id="header">Grow</h1>
 
                         <HashRouter>
                             <Route exact path="/" component={Registration} />

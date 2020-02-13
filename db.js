@@ -157,7 +157,7 @@ exports.endFriendship = function(recipient_id, sender_id) {
     return db
         .query(
             `DELETE FROM friendships
-        WHERE (recipient_id = $1
+            WHERE (recipient_id = $1
             AND sender_id = $2)
             OR (recipient_id = $2
             AND sender_id = $1)`,
@@ -201,4 +201,10 @@ exports.storeMessages = function(id, message) {
             RETURNING id`,
         [id, message]
     );
+};
+
+exports.getChatUser = id => {
+    return db
+        .query(`SELECT * FROM users WHERE id = $1`, [id])
+        .then(({ rows }) => rows[0]);
 };

@@ -1,0 +1,76 @@
+.nav-bar {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    justify-content: space-between;
+    z-index: 6;
+}
+
+#welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#logo {
+    color: black;
+    letter-spacing: 0.3rem;
+    font-weight: 400;
+    font-family: "tomatoSoup";
+    font-size: 90px;
+    margin: 5px;
+    margin-left: 15px;
+    z-index: 5;
+}
+
+#profilePic {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: 20px;
+    border-radius: 50%;
+}
+
+.fa-sign-out-alt {
+    color: black;
+    font-size: 25px;
+}
+.fa-bars {
+    margin-right: 20px;
+    font-size: 25px;
+}
+
+.fa-comments {
+    font-size: 25px;
+}
+
+.nav {
+    text-decoration: none;
+    color: black;
+    margin: 0 20px;
+    font-family: "Montserrat-medium", sans-serif;
+    font-weight: 300;
+    display: inline-block;
+    z-index: 4;
+}
+
+.menu {
+    position: fixed;
+    width: 20%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 6;
+}
+
+.signout {
+    display: flex;
+    text-decoration: none;
+    bottom: 80px;
+    position: absolute;
+}

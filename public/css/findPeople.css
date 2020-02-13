@@ -1,0 +1,83 @@
+.find-container {
+    background-color: honeydew;
+}
+
+.searchfield {
+    position: inherit;
+    background-color: honeydew;
+}
+
+.search-background {
+    height: 100px;
+    width: 100vw;
+    top: 0;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.search-input {
+    color: white;
+    font-size: 60px;
+    position: absolute;
+    height: 100px;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: none;
+    outline: none;
+    padding: 20px;
+    padding-left: 80px;
+    z-index: 2;
+}
+
+.search-icon {
+    position: absolute;
+    color: black;
+    font-family: "Raleway", sans-sans-serif;
+    margin: 30px;
+    font-size: 40px;
+    z-index: 3;
+}
+
+.search-icon:hover {
+    display: inline-block;
+    cursor: pointer;
+    transform-origin: center center;
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1);
+    vertical-align: middle;
+    z-index: 4;
+}
+
+.search-result {
+    display: flex;
+    padding: 25px;
+    justify-content: flex-start;
+    overflow-x: scroll;
+}
+
+.user-container {
+    text-decoration: none;
+    color: black;
+    padding: 0 60px;
+}
+
+.user-container:hover {
+    color: #11896b;
+}
+
+.search-pic {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.search-name {
+    text-align: center;
+    padding: 10px;
+}
+
+.newUser-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}

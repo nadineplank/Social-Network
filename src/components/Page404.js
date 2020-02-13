@@ -1,6 +1,9 @@
 import React from "react";
 
 export default function Page404() {
+    function randomBackground() {
+        return "background" + Math.floor(Math.random() * 4) + ".gif";
+    }
     return (
         <div className="wrapper404">
             <svg>
@@ -11,7 +14,7 @@ export default function Page404() {
                         width="100vw"
                         height="100vh"
                     >
-                        <image xlinkHref="background.gif" />
+                        <image xlinkHref={randomBackground()} />
                     </pattern>
                 </defs>
                 <text

@@ -3,7 +3,7 @@ import axios from "../axios";
 
 export default function FriendButton({ recipient, userId }) {
     const [buttonText, setButtonText] = useState("");
-    const [buttonClass, setButtonClass] = useState("");
+    const [buttonId, setButtonId] = useState("");
 
     useEffect(() => {
         if (userId) {
@@ -16,17 +16,18 @@ export default function FriendButton({ recipient, userId }) {
 
                     if (!data) {
                         setButtonText("send friend request");
-                        setButtonClass("send-button");
+                        setButtonId("send-button");
                     } else if (data.accepted == false) {
                         if (data.sender_id == userId) {
                             setButtonText("cancel friend request");
-                            setButtonClass("cancel-button");
+                            setButtonId("cancel-button");
                         } else if (data.recipient_id == userId) {
                             setButtonText("accept friend request");
-                            setButtonClass("accept-button");
+                            setButtonId("accept-button");
                         }
                     } else if (data.accepted == true) {
-                        setButtonText("end friendship");
+                        setButtonText("unfriend");
+                        setButtonId("cancel-button");
                     }
                 })();
             } catch (err) {
@@ -43,7 +44,7 @@ export default function FriendButton({ recipient, userId }) {
             path = "/accept-friend-request/";
         } else if (
             buttonText == "cancel friend request" ||
-            buttonText == "end friendship"
+            buttonText == "unfriend"
         ) {
             path = "/end-friendship/";
         }
@@ -56,10 +57,10 @@ export default function FriendButton({ recipient, userId }) {
                     if (buttonText == "send friend request") {
                         setButtonText("cancel friend request");
                     } else if (buttonText == "accept friend request") {
-                        setButtonText("end friendship");
+                        setButtonText("unfriend");
                     } else if (
                         buttonText == "cancel friend request" ||
-                        buttonText == "end friendship"
+                        buttonText == "unfriend"
                     ) {
                         setButtonText("send friend request");
                     }
@@ -72,7 +73,7 @@ export default function FriendButton({ recipient, userId }) {
 
     return (
         <div>
-            <button className={buttonClass} onClick={handleClick}>
+            <button className="bio-button" id={buttonId} onClick={handleClick}>
                 {buttonText}
             </button>
         </div>

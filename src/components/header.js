@@ -17,17 +17,14 @@ export default class Header extends React.Component {
                     <p>friendships</p>
                 </Link>
 
-                <Link to="/chat" className="nav">
-                    <i className="far fa-comments"></i>
-                </Link>
-
                 <Link to="/users" className="nav">
-                    <i
-                        className="fas fa-search"
-                        onClick={this.props.showSearch}
-                    >
+                    <i className="fas fa-search">
                         <p className="nav">find friends</p>
                     </i>
+                </Link>
+
+                <Link to="/chat" className="nav">
+                    <i className="far fa-comments"></i>
                 </Link>
 
                 <i className="fas fa-bars" onClick={this.props.showMenu}></i>
