@@ -98,7 +98,7 @@ exports.findPeople = function(val) {
             OR CONCAT(first, ' ', last)
             ILIKE $1
             ORDER BY id
-            LIMIT 4`,
+            LIMIT 10`,
             [val + "%"]
         )
         .then(({ rows }) => rows);

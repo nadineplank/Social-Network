@@ -45,9 +45,6 @@ export default class App extends React.Component {
         }
         return (
             <BrowserRouter>
-                {this.state.searchVisible && (
-                    <Search showSearch={() => this.showSearch()} />
-                )}
                 <Header
                     first={this.state.first}
                     last={this.state.first}
@@ -83,23 +80,21 @@ export default class App extends React.Component {
                     </div>
                 )}
 
-                <div>
+                <div className="background">
                     <Switch>
                         <Route
                             exact
                             path="/"
                             render={() => (
-                                <div>
-                                    <Profile
-                                        id={this.state.id}
-                                        first={this.state.first}
-                                        last={this.state.last}
-                                        image={this.state.image}
-                                        toggleState={() => this.toggleState()}
-                                        bio={this.state.bio}
-                                        setBio={bio => this.setState({ bio })}
-                                    />
-                                </div>
+                                <Profile
+                                    id={this.state.id}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    image={this.state.image}
+                                    toggleState={() => this.toggleState()}
+                                    bio={this.state.bio}
+                                    setBio={bio => this.setState({ bio })}
+                                />
                             )}
                         />
 

@@ -31,7 +31,7 @@ export default class Bio extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="bio-container">
                 {!this.props.bio && (
                     <button
                         onClick={() => this.setState({ editorVisible: true })}
@@ -43,9 +43,10 @@ export default class Bio extends React.Component {
                 {this.props.bio && (
                     <div>
                         {this.state.editorVisible == false && (
-                            <div className="bio-container">
-                                {this.props.bio}
+                            <div>
+                                <p className="bio">{this.props.bio}</p>
                                 <button
+                                    className="bio-button"
                                     onClick={() =>
                                         this.setState({ editorVisible: true })
                                     }
@@ -58,13 +59,19 @@ export default class Bio extends React.Component {
                 )}
 
                 {this.state.editorVisible == true && (
-                    <div>
+                    <div className="edit-container">
                         <textarea
-                            name="bio"
+                            className="bio-textarea"
+                            name="textarea"
                             defaultValue={this.state.bio}
                             onChange={e => this.handleChange(e)}
                         ></textarea>
-                        <button onClick={() => this.toggleState()}>SAVE</button>
+                        <button
+                            className="bio-button"
+                            onClick={() => this.toggleState()}
+                        >
+                            SAVE
+                        </button>
                     </div>
                 )}
             </div>

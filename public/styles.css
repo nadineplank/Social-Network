@@ -9,8 +9,9 @@
     src: url(./fonts/TomatoSoup-Regular.ttf) format("truetype");
 }
 
-img {
-    height: 200px;
+.background {
+    background-color: honeydew;
+    height: 100vh;
 }
 
 input {
@@ -23,7 +24,9 @@ input {
     align-items: center;
 }
 
-.profile-container {
+/* PROFILE */
+
+.container {
     display: flex;
     background-color: honeydew;
     justify-content: center;
@@ -35,17 +38,62 @@ input {
     width: 70%;
     height: 80%;
     margin: 3%;
+    margin-top: 5%;
 }
 
 .profile-pic {
+    border-radius: 50%;
+    height: 220px;
+    width: 220px;
+}
+
+.profile-container {
+    margin-left: 50px;
 }
 
 .username {
+    font-size: 25px;
+    padding: 10px 20px 20px;
+    font-family: "Raleway";
 }
 
 .bio-container {
+    padding: 20px;
+    width: 600px;
+}
+
+.bio {
+    width: 560px;
+    height: 70px;
+}
+
+.bio-button {
+    margin: 20px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.edit-container {
     display: flex;
     flex-direction: column;
+}
+
+.bio-textarea {
+    height: 70px;
+    width: 560px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+.send-button,
+.accept-button {
+    color: green;
+}
+
+.cancel-button {
+    color: red;
 }
 
 /* NAV */
@@ -56,6 +104,7 @@ input {
     align-items: center;
     height: 60px;
     justify-content: space-between;
+    z-index: 6;
 }
 
 #welcome {
@@ -69,9 +118,10 @@ input {
     letter-spacing: 0.3rem;
     font-weight: 400;
     font-family: "tomatoSoup";
-    font-size: 85px;
+    font-size: 90px;
     margin: 5px;
     margin-left: 15px;
+    z-index: 5;
 }
 
 #profilePic {
@@ -87,18 +137,22 @@ input {
     font-size: 25px;
 }
 .fa-bars {
-    margin-right: 15px;
-    font-size: 20px;
+    margin-right: 20px;
+    font-size: 25px;
 }
 
 .fa-comments {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .nav {
     text-decoration: none;
     color: black;
     margin: 0 20px;
+    font-family: "Montserrat-medium", sans-serif;
+    font-weight: 300;
+    display: inline-block;
+    z-index: 4;
 }
 
 .menu {
@@ -111,6 +165,7 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 6;
 }
 
 /* LOGIN / REGISTER */
@@ -297,6 +352,7 @@ input {
     justify-content: center;
     align-items: center;
     background-color: honeydew;
+    height: 100%;
 }
 
 .chat-container {
@@ -359,53 +415,15 @@ input {
     color: black;
 }
 
-/* 404 */
-
-image {
-    width: 100vw;
-    height: 100vh;
-}
-
-svg {
-    width: 100vw;
-    height: 100vh;
-    font: 900 270px "Montserrat-medium", sans-serif;
-    letter-spacing: 1rem;
-}
-
-text {
-    fill: url(#gif);
-}
-
-.wrapper404 {
-    background: #1d1f20;
-    position: fixed;
-    top: 0;
-}
-
-#back-container {
-    width: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    bottom: 35%;
-}
-
-#back {
-    color: white;
-    text-decoration: none;
-    font-size: 25px;
-    font-weight: 300;
-}
-
-#back:hover {
-    color: #11896b;
-}
-
 /* SEARCH */
+
+.find-container {
+    background-color: honeydew;
+}
 
 .searchfield {
     position: inherit;
+    background-color: honeydew;
 }
 
 .search-background {
@@ -446,4 +464,77 @@ text {
     transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1);
     vertical-align: middle;
     z-index: 4;
+}
+
+.search-result {
+    display: flex;
+    padding: 25px;
+    justify-content: flex-start;
+    overflow-x: scroll;
+}
+
+.user-container {
+    text-decoration: none;
+    color: black;
+    padding: 0 60px;
+}
+
+.search-pic {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.search-name {
+    text-align: center;
+    padding: 10px;
+}
+
+.search-name:hover {
+    color: #11896b;
+}
+
+/* 404 */
+
+image {
+    width: 100vw;
+    height: 100vh;
+}
+
+svg {
+    width: 100vw;
+    height: 100vh;
+    font: 900 270px "Montserrat-medium", sans-serif;
+    letter-spacing: 1rem;
+}
+
+text {
+    fill: url(#gif);
+}
+
+.wrapper404 {
+    background: #1d1f20;
+    position: fixed;
+    top: 0;
+    z-index: 60;
+}
+
+#back-container {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 35%;
+}
+
+#back {
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 300;
+}
+
+#back:hover {
+    color: #11896b;
 }

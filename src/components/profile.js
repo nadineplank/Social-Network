@@ -9,14 +9,14 @@ export default class Profile extends React.Component {
     }
     render() {
         return (
-            <div className="profile-container">
+            <div className="container">
                 <div className="profile">
                     <ProfilePic
                         toggleState={this.props.toggleState}
                         image={this.props.image}
                     />
 
-                    <div className="bio">
+                    <div className="profile-container">
                         <p className="username">
                             {this.props.first} {this.props.last}
                         </p>

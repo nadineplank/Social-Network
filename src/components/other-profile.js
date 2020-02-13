@@ -32,20 +32,26 @@ export class OtherProfile extends React.Component {
 
     render() {
         return (
-            <div className="profile">
-                <img
-                    src={this.state.image}
-                    alt={(this.state.first, " ", this.state.last)}
-                />
-                <p>
-                    {this.state.first} {this.state.last}
-                </p>
-
-                <p className="bio">{this.state.bio}</p>
-                <FriendButton
-                    userId={this.state.userId}
-                    recipient={this.state.id}
-                />
+            <div className="container">
+                <div className="profile">
+                    <img
+                        className="profile-pic"
+                        src={this.state.image}
+                        alt={(this.state.first, " ", this.state.last)}
+                    />
+                    <div className="profile-container">
+                        <p className="username">
+                            {this.state.first} {this.state.last}
+                        </p>
+                        <div className="bio-container">
+                            <p className="bio">{this.state.bio}</p>
+                            <FriendButton
+                                userId={this.state.userId}
+                                recipient={this.state.id}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

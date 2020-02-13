@@ -40,38 +40,55 @@ export default function findPeople() {
     }, [input]);
 
     return (
-        <div>
-            <h1>Find other people</h1>
+        <div className="find-container">
+            <div className="searchfield">
+                <p className="search-icon">X</p>
+                <input
+                    className="search-input"
+                    type="text"
+                    placeholder="enter name"
+                    onChange={onChange}
+                />
+                <img className="search-background" src="background.gif" />
 
-            <input onChange={onChange} type="text" placeholder="enter name" />
-            {users.map((user, idx) => {
-                return (
-                    <a className="newUser" href={`/user/${user.id}`} key={idx}>
-                        <div className="profile" key={idx}>
-                            <img className="profilePic" src={user.image} />
+                <div className="search-result">
+                    {users.map((user, idx) => {
+                        return (
+                            <a
+                                className="user-container"
+                                href={`/user/${user.id}`}
+                                key={idx}
+                            >
+                                <img className="search-pic" src={user.image} />
 
-                            <p className="name">{`${user.first} ${user.last}`}</p>
-                            <p>{user.bio}</p>
-                        </div>
-                    </a>
-                );
-            })}
-            <p>Checkout who just joined!</p>
-            {newUsers.map((newUser, idx) => {
-                return (
-                    <a
-                        className="newUser"
-                        href={`/user/${newUser.id}`}
-                        key={idx}
-                    >
-                        <div className="profile" key={idx}>
-                            <img className="profilePic" src={newUser.image} />
+                                <p className="search-name">{`${user.first} ${user.last}`}</p>
+                            </a>
+                        );
+                    })}
+                </div>
+            </div>
 
-                            <p className="name">{`${newUser.first} ${newUser.last}`}</p>
-                        </div>
-                    </a>
-                );
-            })}
+            <div className="newUser-container">
+                <p>Checkout who just joined!</p>
+                {newUsers.map((newUser, idx) => {
+                    return (
+                        <a
+                            className="newUser"
+                            href={`/user/${newUser.id}`}
+                            key={idx}
+                        >
+                            <div className="profile" key={idx}>
+                                <img
+                                    className="profilePic"
+                                    src={newUser.image}
+                                />
+
+                                <p className="name">{`${newUser.first} ${newUser.last}`}</p>
+                            </div>
+                        </a>
+                    );
+                })}
+            </div>
         </div>
     );
 }

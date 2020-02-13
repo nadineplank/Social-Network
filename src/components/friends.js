@@ -25,7 +25,6 @@ export default function friendsWannabes() {
     if (!friends || !wannabes) {
         return null;
     }
-    // TODO write more code here
     const acceptedFriends = (
         <div className="users">
             {friends.map(friend => (
@@ -75,7 +74,7 @@ export default function friendsWannabes() {
     );
 
     return (
-        <div>
+        <div className="container">
             <div id="friends">
                 {!friends.length && <div>You have no friends yet!</div>}
                 {!!friends.length && acceptedFriends}

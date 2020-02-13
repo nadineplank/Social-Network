@@ -3,6 +3,7 @@ import axios from "../axios";
 
 export default function FriendButton({ recipient, userId }) {
     const [buttonText, setButtonText] = useState("");
+    const [buttonClass, setButtonClass] = useState("");
 
     useEffect(() => {
         if (userId) {
@@ -15,11 +16,14 @@ export default function FriendButton({ recipient, userId }) {
 
                     if (!data) {
                         setButtonText("send friend request");
+                        setButtonClass("send-button");
                     } else if (data.accepted == false) {
                         if (data.sender_id == userId) {
                             setButtonText("cancel friend request");
+                            setButtonClass("cancel-button");
                         } else if (data.recipient_id == userId) {
                             setButtonText("accept friend request");
+                            setButtonClass("accept-button");
                         }
                     } else if (data.accepted == true) {
                         setButtonText("end friendship");
@@ -68,7 +72,9 @@ export default function FriendButton({ recipient, userId }) {
 
     return (
         <div>
-            <button onClick={handleClick}>{buttonText}</button>
+            <button className={buttonClass} onClick={handleClick}>
+                {buttonText}
+            </button>
         </div>
     );
 }

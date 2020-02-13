@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -8,21 +9,28 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className="nav-bar">
-                <h1 id="logo">Grow</h1>
-                <a className="nav" href="/users">
-                    find friends
-                </a>
+                <Link to="/" className="nav">
+                    <h1 id="logo">Grow</h1>
+                </Link>
 
-                <a className="nav" href="/friends">
-                    friendships
-                </a>
+                <Link to="/friends" className="nav">
+                    <p>friendships</p>
+                </Link>
 
-                <a className="nav" href="/chat">
+                <Link to="/chat" className="nav">
                     <i className="far fa-comments"></i>
-                </a>
-                <i className="fas fa-search" onClick={this.props.showSearch} />
+                </Link>
 
-                <i className="fas fa-bars" onClick={this.props.showMenu} />
+                <Link to="/users" className="nav">
+                    <i
+                        className="fas fa-search"
+                        onClick={this.props.showSearch}
+                    >
+                        <p className="nav">find friends</p>
+                    </i>
+                </Link>
+
+                <i className="fas fa-bars" onClick={this.props.showMenu}></i>
             </div>
         );
     }
