@@ -1,0 +1,41 @@
+image {
+    width: 100vw;
+    height: 100vh;
+}
+
+svg {
+    width: 100vw;
+    height: 100vh;
+    font: 900 270px "Montserrat-medium", sans-serif;
+    letter-spacing: 1rem;
+}
+
+text {
+    fill: url(#gif);
+}
+
+.wrapper404 {
+    background: #1d1f20;
+    position: fixed;
+    top: 0;
+    z-index: 60;
+}
+
+#back-container {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 35%;
+}
+
+#back {
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 300;
+}
+
+#back:hover {
+    color: #11896b;
+}

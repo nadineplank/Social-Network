@@ -1,0 +1,31 @@
+.user {
+    margin: 0px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-pic {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.friends,
+.wannabes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.buttons {
+    text-align: center;
+    padding: 7px;
+    margin: 15px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.friend-status {
+    text-align: center;
+}

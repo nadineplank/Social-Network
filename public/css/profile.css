@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    background-color: honeydew;
+    justify-content: center;
+    height: 100vh;
+}
+
+.profile {
+    display: flex;
+    width: 70%;
+    height: 80%;
+    margin: 3%;
+    margin-top: 5%;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    height: 220px;
+    width: 220px;
+    object-fit: cover;
+}
+
+.profile-container {
+    margin-left: 50px;
+}
+
+.username {
+    font-size: 25px;
+    padding: 10px 20px 20px;
+    font-family: "Raleway";
+}
+
+.bio-container {
+    padding: 20px;
+    width: 600px;
+}
+
+.bio {
+    width: 560px;
+    height: 70px;
+}
+
+.bio-button {
+    margin: 20px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100px;
+    text-transform: uppercase;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bio-textarea {
+    height: 70px;
+    width: 560px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+#send-button,
+#accept-button {
+    color: seagreen;
+    width: 200px;
+}
+
+#cancel-button {
+    color: darkred;
+    width: 200px;
+}
